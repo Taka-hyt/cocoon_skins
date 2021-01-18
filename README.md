@@ -7,7 +7,7 @@
 `$ docker-compose up -d`
 3. 下記のURLにアクセスしてWordPressを起動  
 http://localhost:3001
-4. Dockerを停止するとき
+4. Dockerを停止するとき  
 `$ docker-compose stop`
 5. Dockerを再起動するとき  
 `$ docker-compose start`
