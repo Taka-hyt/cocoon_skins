@@ -25,8 +25,8 @@ const webpackConfig = require('./webpack.config');
 // const path = require('path');
 
 var paths = {
-    srcDir: './simple-blue',
-    dstDir: './simple-blue',
+    srcDir: './wp-content/themes/cocoon-master/skins',
+    dstDir: './wp-content/themes/cocoon-master/skins',
 };
 
 // ブラウザの立ち上げ
@@ -43,10 +43,10 @@ var paths = {
 // }
 
 // ブラウザをリロード
-function browserReload(done) {
-    browserSync.reload();
-    done();
-}
+// function browserReload(done) {
+//     browserSync.reload();
+//     done();
+// }
 
 // 立ち上げた際にdistを一旦クリーンにする
 // function clean(cb) {
@@ -98,7 +98,7 @@ function browserReload(done) {
 function sassCompile() {
     return (
         gulp
-            .src(paths.srcDir + '/*.{scss,sass}')
+            .src(paths.srcDir + '/**/*.{scss,sass}')
             .pipe(plumber(notify.onError('Error: <%= error.message %>')))
             // .pipe(sourcemaps.init())
             .pipe(
@@ -185,7 +185,8 @@ function watchFile(done) {
     // gulp.watch(paths.srcDir + '/**/*.html', htmlMin).on('change', gulp.series(browserReload));
     // gulp.watch(paths.srcDir + '/pug/**/*.pug', pugCompile).on('change', gulp.series(browserReload));
     // gulp.watch(paths.srcDir + '/ejs/**/*.ejs', ejsCompile).on('change', gulp.series(browserReload));
-    gulp.watch(paths.srcDir + '/*.{scss,sass}', sassCompile).on('change', gulp.series(browserReload));
+    // gulp.watch(paths.srcDir + '/*.{scss,sass}', sassCompile).on('change', gulp.series(browserReload));
+    gulp.watch(paths.srcDir + '/**/*.{scss,sass}', sassCompile);
     // gulp.watch(paths.srcDir + '/asset/js/**/*.js', jsBundle).on('change', gulp.series(browserReload));
     // gulp.watch(paths.srcDir + '/asset/image/*.{jpg,jpeg,png,gif,svg}', imageMin).on('change', gulp.series(browserReload));
     // gulp.watch(paths.srcDir + '/asset/movie/*.*', movie).on('change', gulp.series(browserReload));
