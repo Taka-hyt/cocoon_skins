@@ -1,16 +1,20 @@
 @charset "UTF-8";
+
 /*
   Skin Name: Simple Pink
   Description: ピンクをベースにしたシンプルで使いやすいスキン
   Skin URI: https://karasu-hc.com/2020/05/20/cocoon-2/
   Author: ベーやん
   Author URI: https://karasu-hc.com/2020/05/20/cocoon-2/
-  Screenshot URI: https://im-cocoon.net/wp-content/uploads/simple_pink.jpg
+  Screenshot URI: https://karasu-hc.com/wp-content/uploads/2020/05/simple_pink.jpg
   Version: 1.0.0
-  Priority: 9730001000
+  Priority: 9999000000
 */
+
 /*以下にスタイルシートを記入してください*/
+
 /* 全体 */
+
 body {
   font-family: Avenir, 'Helvetica neue', Helvetica, 'Segoe UI', '游ゴシック体', YuGothic, '游ゴシック Medium', 'Yu Gothic Medium', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
   background-color: #f4f5f7;
@@ -22,6 +26,7 @@ body {
 }
 
 /* ヘッダー・グローバルナビ */
+
 .header-container .navi {
   background-color: #f88fa7;
 }
@@ -57,6 +62,7 @@ body {
 }
 
 /* サイト名・キャッチフレーズ */
+
 .site-name-text {
   color: #fff;
 }
@@ -66,6 +72,7 @@ body {
 }
 
 /* 見出し */
+
 .article h2 {
   margin: 5px 0;
   padding: 15px 25px;
@@ -77,13 +84,12 @@ body {
 
 .article h3 {
   padding: 10px 20px;
-  background-color: #f4476e;
+  background-color: #ffdae1;
   border-color: #f88fa7;
   border-top: none;
   border-right: none;
   border-bottom: none;
   border-left: 6px solid #f88fa7;
-  color: #fff;
 }
 
 .article h4 {
@@ -101,13 +107,14 @@ body {
   display: block;
   width: 100%;
   height: 4px;
-  background: linear-gradient(to right, #f88fa7, #f4476e);
+  background: linear-gradient(to right, #f88fa7, #ffdae1);
   position: absolute;
   left: 0;
   bottom: 0;
 }
 
 /* サイドバー */
+
 .sidebar h3 {
   padding: 10px;
   border: 1.5px solid #333;
@@ -128,17 +135,20 @@ body {
 }
 
 /* 検索ボタン */
+
 input[type='text'].search-edit {
   font-size: 16px;
   border-radius: 46px;
 }
 
 /* シェアボタン */
+
 #container .sns-buttons a {
   border-radius: 1px;
 }
 
 /* ブログカード */
+
 .a-wrap .blogcard {
   border-color: #f88fa7;
 }
@@ -171,7 +181,7 @@ input[type='text'].search-edit {
 
 .tag-link:hover,
 .comment-reply-link:hover {
-  color: #f4476e;
+  color: #007eaf;
   background-color: transparent;
 }
 
@@ -181,9 +191,11 @@ input[type='text'].search-edit {
 }
 
 /* .tagcloud a:hover {
-    color: $key_color3;
+    color: #007eaf;
 } */
+
 /* コメント送信ボタン */
+
 input[type='submit'] {
   padding: 10px;
   background: #f88fa7;
@@ -204,6 +216,7 @@ input[type='submit'] {
 }
 
 /* テーブル */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -216,11 +229,16 @@ table th {
   padding: 10px;
   font-weight: bold;
   border-bottom: 1.5px solid #f88fa7;
-  background: #f4476e;
+  background: #ffdae1;
   font-size: 18px;
 }
 
+table tr:nth-child(even) {
+  background: #ffdae1;
+}
+
 /* ページネーション */
+
 .page-numbers {
   color: #fdb5c3;
   border: 1px solid #f88fa7;
@@ -243,6 +261,7 @@ table th {
 }
 
 /* フッター */
+
 .footer {
   padding-top: 30px;
   padding-bottom: 35px;
@@ -263,6 +282,7 @@ table th {
 }
 
 /* スクロールトップボタン */
+
 .go-to-top {
   bottom: 35px;
 }
@@ -280,8 +300,9 @@ table th {
 }
 
 /* レスポンシブ */
+
 @media screen and (max-width: 834px) {
-  .header-container-in.hlt-top-menu .header .header-in {
+  .header-container-in.hlt-top-menu #header .header-in {
     display: flex;
     align-items: center;
   }
@@ -294,6 +315,7 @@ table th {
     font-size: 16px;
   }
 }
+
 @media screen and (max-width: 480px) {
   .article h2 {
     padding: 0.6em 0.2em;
@@ -307,13 +329,4 @@ table th {
     padding-top: 25px;
     padding-bottom: 30px;
   }
-}
-/*以降は同梱後の追加修正*/
-.page-prev-next {
-  border-radius: 99px;
-}
-
-.footer a,
-.footer .footer-in .sns-buttons a {
-  color: #fff;
 }
