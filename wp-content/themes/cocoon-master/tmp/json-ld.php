@@ -28,18 +28,8 @@ $author = (get_the_author_meta('display_name') ? get_the_author_meta('display_na
     "@type": "ImageObject",
 <?php
 // アイキャッチ画像URLを取得
-/*
-$image_id = get_post_thumbnail_id();
-$image = wp_get_attachment_image_src($image_id, true);
-$image_url = null;
-if (isset($image[0])) {
-  $image_url = $image[0];
-}
-*/
 $image_url = get_singular_eyecatch_image_url();
-//_v($image_url);
 $image_file = url_to_local($image_url);
-//var_dump($image_file);
 if ($image_url && file_exists($image_file)) {
   $image_url = $image_url;
   $size = get_image_width_and_height($image_url);
@@ -51,7 +41,9 @@ if ($image_url && file_exists($image_file)) {
     $width = 696;
   }
 } else {
-  $image_url = NO_IMAGE_LARGE;
+  if (!$image_url) {
+    $image_url = NO_IMAGE_LARGE;
+  }
   $width = 800;
   $height = 451;
 } ?>
@@ -107,7 +99,11 @@ if ($image_url && file_exists($image_file)) {//ロゴ画像がある場合
 
     }
   },
-  "description": "<?php echo esc_attr(get_meta_description_text()); ?>…"<?php  // 抜粋 ?>
+  "description": "<?php
+    $description = get_meta_description_text();
+    $description = str_replace('\\', '', $description);
+    echo esc_attr($description);
+  ?>…"<?php  // 抜粋 ?>
 
 }
 </script>

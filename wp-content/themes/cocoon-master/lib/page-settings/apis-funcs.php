@@ -26,8 +26,16 @@ endif;
 //AmazonトラッキングID
 define('OP_AMAZON_ASSOCIATE_TRACKING_ID', 'amazon_associate_tracking_id');
 if ( !function_exists( 'get_amazon_associate_tracking_id' ) ):
-function get_amazon_associate_tracking_id(){
-  return get_theme_option(OP_AMAZON_ASSOCIATE_TRACKING_ID);
+function get_amazon_associate_tracking_id($tracking_id = null){
+  //Cocoon設定で入力されているものを取得
+  $id = get_theme_option(OP_AMAZON_ASSOCIATE_TRACKING_ID);
+
+  //個別のトラッキングIDショートコード
+  $tracking_id = trim($tracking_id);
+  if ($tracking_id) {
+    $id = $tracking_id;
+  }
+  return $id;
 }
 endif;
 
@@ -220,6 +228,30 @@ define('OP_YAHOO_SEARCH_BUTTON_TEXT', 'yahoo_search_button_text');
 if ( !function_exists( 'get_yahoo_search_button_text' ) ):
 function get_yahoo_search_button_text(){
   return stripslashes_deep(get_theme_option(OP_YAHOO_SEARCH_BUTTON_TEXT, __( 'Yahoo!ショッピング', THEME_NAME )));
+}
+endif;
+
+//DMMアフィリエイトID
+define('OP_DMM_AFFILIATE_ID', 'dmm_affiliate_id');
+if ( !function_exists( 'get_dmm_affiliate_id' ) ):
+function get_dmm_affiliate_id(){
+  return get_theme_option(OP_DMM_AFFILIATE_ID);
+}
+endif;
+
+//DMM検索ボタンを表示する
+define('OP_DMM_SEARCH_BUTTON_VISIBLE', 'dmm_search_button_visible');
+if ( !function_exists( 'is_dmm_search_button_visible' ) ):
+function is_dmm_search_button_visible(){
+  return get_theme_option(OP_DMM_SEARCH_BUTTON_VISIBLE, 1);
+}
+endif;
+
+//DMM検索ボタン文字
+define('OP_DMM_SEARCH_BUTTON_TEXT', 'dmm_search_button_text');
+if ( !function_exists( 'get_dmm_search_button_text' ) ):
+function get_dmm_search_button_text(){
+  return stripslashes_deep(get_theme_option(OP_DMM_SEARCH_BUTTON_TEXT, __( 'DMM', THEME_NAME )));
 }
 endif;
 

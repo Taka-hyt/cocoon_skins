@@ -95,6 +95,7 @@ require_once abspath(__FILE__).'custom-fields/custom-css-field.php'; //カスタ
 require_once abspath(__FILE__).'custom-fields/custom-js-field.php';  //カスタJS設定
 require_once abspath(__FILE__).'custom-fields/memo-field.php';  //メモ
 require_once abspath(__FILE__).'custom-fields/sns-image-field.php';  //SNS画像
+require_once abspath(__FILE__).'custom-fields/other-field.php';  //その他
 require_once abspath(__FILE__).'seo.php';      //SEO関数
 require_once abspath(__FILE__).'ogp.php';      //OGP関数
 require_once abspath(__FILE__).'blogcard-in.php';  //内部ブログカード関数
@@ -119,6 +120,11 @@ require_once abspath(__FILE__).'profile.php'; //プロフィール関係の処�
 require_once abspath(__FILE__).'youtube.php'; //YouTube関係の処理
 require_once abspath(__FILE__).'font-awesome.php'; //Font Awesome
 require_once abspath(__FILE__).'admin.php'; //管理者機能
+if ( function_exists( 'register_block_style' ) && is_block_editor_style_block_option_visible() ){
+  // require_once abspath(__FILE__).'block-editor-styles-paragraph.php'; //ブロックエディタースタイル（段落）
+  require_once abspath(__FILE__).'block-editor-styles-group.php'; //ブロックエディタースタイル（グループ）
+  require_once abspath(__FILE__).'block-editor-styles-list.php'; //ブロックエディタースタイル（リスト）
+}
 
 //Cocoon Blocks
 if ( !function_exists( 'cocoon_blocks_cgb_block_assets' ) && is_gutenberg_editor_enable() ):

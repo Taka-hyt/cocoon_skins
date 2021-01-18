@@ -44,9 +44,9 @@ class NewEntryWidgetItem extends WP_Widget {
 
     //classにwidgetと一意となるクラス名を追加する
     if ( //「表示モード」が「全ての新着記事」のとき
-               ($widget_mode == WM_DEFAULT) ||
-               //「表示モード」が「カテゴリ別新着記事」のとき
-               ( ($widget_mode == 'category') && get_category_ids() ) ):
+              ($widget_mode == WM_DEFAULT) ||
+              //「表示モード」が「カテゴリ別新着記事」のとき
+              ( ($widget_mode == 'category') && get_category_ids() ) ):
       echo $args['before_widget'];
       if (!is_null($title)) {
         echo $args['before_title'];
@@ -54,11 +54,10 @@ class NewEntryWidgetItem extends WP_Widget {
           echo $title;//タイトルが設定されている場合は使用する
         } else {
           if ( $widget_mode == WM_DEFAULT ) {//全ての表示モードの時は
-            _e( '新着記事', THEME_NAME );
+            echo apply_filters('new_entries_caption', __( '新着記事', THEME_NAME ));;
           } else {
             _e( 'カテゴリー別新着記事', THEME_NAME );
           }
-          //echo '新着記事';
         }
         echo $args['after_title'];
       }
@@ -129,11 +128,15 @@ class NewEntryWidgetItem extends WP_Widget {
     ?>
     <?php //ウィジェットモード（全てか、カテゴリ別か） ?>
     <p>
-      <label for="<?php echo $this->get_field_id('widget_mode'); ?>">
-        <?php _e( '表示モード', THEME_NAME ) ?>
-      </label><br />
-      <input class="widefat" id="<?php echo $this->get_field_id('widget_mode'); ?>" name="<?php echo $this->get_field_name('widget_mode'); ?>"  type="radio" value="all" <?php echo ( ($widget_mode == WM_DEFAULT || !$widget_mode ) ? ' checked="checked"' : ""); ?> /><?php _e( '全ての新着記事（全ページで表示）', THEME_NAME ) ?><br />
-      <input class="widefat" id="<?php echo $this->get_field_id('widget_mode'); ?>" name="<?php echo $this->get_field_name('widget_mode'); ?>"  type="radio" value="category"<?php echo ($widget_mode == 'category' ? ' checked="checked"' : ""); ?> /><?php _e( 'カテゴリ別新着記事（投稿・カテゴリで表示）', THEME_NAME ) ?><br />
+      <?php
+      generate_label_tag($this->get_field_id('widget_mode'), __('表示モード', THEME_NAME) );
+      echo '<br>';
+      $options = array(
+        'all' => __( '全ての新着記事（全ページで表示）'),
+        'category' => __( 'カテゴリ別新着記事（投稿・カテゴリで表示）'),
+      );
+      generate_radiobox_tag($this->get_field_name('widget_mode'), $options, $widget_mode);
+      ?>
     </p>
     <?php //タイトル入力フォーム ?>
     <p>

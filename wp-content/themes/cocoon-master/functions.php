@@ -79,12 +79,12 @@ function get_post_navi_thumbnail_tag($id, $width = THUMB120WIDTH, $height = THUM
       $w = THUMB120WIDTH;
       $h = THUMB120HEIGHT;
       $image = get_no_image_160x90_url();
-      $wh_attr = ' srcset="'.$image.' '.$w.'w" width="'.$w.'" height="'.$h.'" sizes="(max-width: '.$w.'px) '.$w.'vw, '.$h.'px"';
     } else {//表示タイプ＝スクエア
       $image = get_no_image_150x150_url();
-      $wh_attr = ' srcset="'.$image.' '.W120.'w" width="'.W120.'" height="'.W120.'" sizes="(max-width: '.W120.'px) '.W120.'vw, '.W120.'px"';
+      $w = THUMB150WIDTH;
+      $h = THUMB150HEIGHT;
     }
-    $thumb = '<img src="'.$image.'" alt="" class="no-image post-navi-no-image"'.$wh_attr.' />';
+    $thumb = get_original_image_tag($image, $w, $h, 'no-image post-navi-no-image');
   }
   return $thumb;
 }
@@ -103,7 +103,7 @@ function get_archive_chapter_title(){
       $chapter_title .= single_cat_title( $icon_font, false );
     }
   } elseif( is_tag() ) {//タグページの場合
-    $tag_id = get_query_var('tag_id');
+    $tag_id = get_queried_object_id();
     $icon_font = '<span class="fa fa-tags" aria-hidden="true"></span>';
     if ($tag_id && get_the_tag_title($tag_id)) {
       $chapter_title .= $icon_font.get_the_tag_title($tag_id);
@@ -128,7 +128,7 @@ function get_archive_chapter_title(){
     //年のフォーマットを取得
     $chapter_title .= '<span class="fa fa-calendar" aria-hidden="true"></span>'.get_the_time('Y');
   } elseif (is_author()) {//著書ページの場合
-    $chapter_title .= '<span class="fa fa-user" aria-hidden="true"></span>'.esc_html(get_queried_object()->display_name);
+    $chapter_title .= '<span class="fa fa-user" aria-hidden="true"></span>'.esc_html(get_the_author_meta( 'display_name', $author ));
   } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) {
     $chapter_title .= 'Archives';
   } else {
@@ -196,13 +196,40 @@ function wp_link_pages_link_custom($link){
 }
 endif;
 
-//メインクエリの出力順変更
-add_action( 'pre_get_posts', 'change_main_loop_sort_order' );
-if ( !function_exists( 'change_main_loop_sort_order' ) ):
-function change_main_loop_sort_order( $query ) {
-  if (is_get_index_sort_orderby_modified()) {
-    if ($query->is_main_query()) {
-      $query->set( 'orderby', 'modified' );
+//メインクエリの出力変更
+add_action( 'pre_get_posts', 'custom_main_query_pre_get_posts' );
+if ( !function_exists( 'custom_main_query_pre_get_posts' ) ):
+function custom_main_query_pre_get_posts( $query ) {
+  if (is_admin()) return;
+
+  //メインループ内
+  if ($query->is_main_query()) {
+
+    //順番変更
+  if (!is_index_sort_orderby_date() && !is_search()) {
+    //投稿日順じゃないときは設定値を挿入する
+    $query->set( 'orderby', get_index_sort_orderby() );
+  }
+
+    //カテゴリーの除外
+    $exclude_category_ids = get_archive_exclude_category_ids();
+    if (!is_singular() && $exclude_category_ids && is_array($exclude_category_ids)) {
+      $query->set( 'category__not_in', $exclude_category_ids );
+    }
+
+    //除外投稿
+    $exclude_post_ids = get_archive_exclude_post_ids();
+    if (!is_singular() && $exclude_post_ids && is_array($exclude_post_ids)) {
+      $query->set( 'post__not_in', $exclude_post_ids );
+    }
+
+  }
+
+  //フィード
+  if ($query->is_feed) {
+    $exclude_post_ids = get_rss_exclude_post_ids();
+    if ($exclude_post_ids && is_array($exclude_post_ids)) {
+      $query->set( 'post__not_in', $exclude_post_ids );
     }
   }
 }
@@ -240,5 +267,63 @@ function smartnews_feed_content_type( $content_type, $type ) {
     return feed_content_type( 'rss2' );
   }
   return $content_type;
+}
+endif;
+
+//サイトマップにnoindex設定を反映させる
+add_filter('wp_sitemaps_posts_query_args', 'wp_sitemaps_posts_query_args_noindex_custom');
+if ( !function_exists( 'wp_sitemaps_posts_query_args_noindex_custom' ) ):
+function wp_sitemaps_posts_query_args_noindex_custom($args){
+  $args['post__not_in'] = get_noindex_post_ids();
+  return $args;
+}
+endif;
+
+//サイトマップにカテゴリー・タグのnoindex設定を反映させる
+add_filter('wp_sitemaps_taxonomies_query_args', 'wp_sitemaps_taxonomies_query_args_noindex_custom');
+if ( !function_exists( 'wp_sitemaps_taxonomies_query_args_noindex_custom' ) ):
+function wp_sitemaps_taxonomies_query_args_noindex_custom($args){
+  //カテゴリーの除外
+  $category_ids = get_noindex_category_ids();
+  if (($args['taxonomy'] == 'category') && $category_ids) {
+    $args['exclude'] = $category_ids;
+  }
+
+  //タグの除外
+  $tag_ids = get_noindex_tag_ids();
+  if (($args['taxonomy'] == 'post_tag') && $tag_ids) {
+    $args['exclude'] = $tag_ids;
+  }
+  return $args;
+}
+endif;
+
+//サイトマップにカテゴリー・タグのnoindex設定を反映させる
+add_filter('wp_sitemaps_taxonomies', 'wp_sitemaps_taxonomies_custum');
+if ( !function_exists( 'wp_sitemaps_taxonomies_custum' ) ):
+function wp_sitemaps_taxonomies_custum( $taxonomies ) {
+  //サイトマップにカテゴリーを出力しない
+  if (is_category_page_noindex()) {
+    unset( $taxonomies['category'] );
+  }
+
+  //サイトマップにタグを出力しない
+  if (is_tag_page_noindex()) {
+    unset( $taxonomies['post_tag'] );
+  }
+
+  return $taxonomies;
+}
+endif;
+
+//サイトマップにその他のアーカイブのnoindex設定を反映する
+add_filter('wp_sitemaps_add_provider', 'wp_sitemaps_add_provider_custom',  10, 2);
+if ( !function_exists( 'wp_sitemaps_add_provider_custom' ) ):
+function wp_sitemaps_add_provider_custom( $provider, $name ) {
+    if ( is_other_archive_page_noindex() && 'users' === $name ) {
+        return false;
+    }
+
+    return $provider;
 }
 endif;

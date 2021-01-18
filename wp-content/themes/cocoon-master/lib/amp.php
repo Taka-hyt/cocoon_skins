@@ -376,9 +376,15 @@ function convert_content_for_amp($the_content){
 
   //画像タグをAMP用に置換
   $the_content = preg_replace('/<img(.+?)\/?>/is', '<amp-img$1></amp-img>', $the_content);
+  /* AMP画像置換修正候補
+  $the_content = preg_replace('{<img([^>]+?)/?>}is', '<amp-img$1></amp-img>', $the_content);
+  */
 
   // Twitterをamp-twitterに置換する（埋め込みコード）
+  /*
   $pattern = '{<blockquote class="twitter-tweet".*?>.+?<a.+?href="https://twitter.com/.*?/status/([^\?"]+).*?">.+?</blockquote>}is';
+  */
+  $pattern = '{<blockquote class="twitter-tweet"[^>]*?>.+?<a[^>]+?href="https://twitter\.com/[^/]*?/status/([^\?"]+)[^>]*?">.+?</blockquote>}is';
   $append = '<p><amp-twitter width=592 height=472 layout="responsive" data-tweetid="$1"></amp-twitter></p>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
@@ -387,32 +393,33 @@ function convert_content_for_amp($the_content){
   $append = '<amp-facebook width=324 height=438 layout="responsive" data-href="$1"></amp-facebook>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
-  // vineをamp-vineに置換する
-  $pattern = '/<iframe[^>]+?src="https:\/\/vine.co\/v\/(.+?)\/embed\/simple".+?><\/iframe>/is';
-  $append = '<p><amp-vine data-vineid="$1" width="592" height="592" layout="responsive"></amp-vine></p>';
+  // vineをamp-vineに置換する（サービス終了したけど一応）
+  $pattern = '{<iframe[^>]+?src="https://vine.co/v/([^/]+?)/embed/simple"[^>]+?></iframe>}is';
+  $append = '<amp-vine data-vineid="$1" width="592" height="592" layout="responsive"></amp-vine>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   // Instagramをamp-instagramに置換する
-  $pattern = '{<blockquote class="instagram-media".+?"https://www.instagram.com/p/(.+?)/.*?".+?</blockquote>}is';
-  $append = '<p><amp-instagram layout="responsive" data-shortcode="$1" width="592" height="592" ></amp-instagram></p>';
+  //$pattern = '{<blockquote class="instagram-media".+?"https://www.instagram.com/p/(.+?)/.*?".+?</blockquote>}is';
+  $pattern = '{<blockquote class="instagram-media"[^>]+?"https://www.instagram.com/p/([^/]+?)/[^"]*?".+?</blockquote>}is';
+  $append = '<amp-instagram layout="responsive" data-shortcode="$1" width="592" height="592" ></amp-instagram>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   // audioをamp-audioに置換する
-  $pattern = '/<audio .+?src="([^"]+?)".+?<\/audio>/is';
-  $append = '<p><amp-audio src="$1"></amp-audio></p>';
+  $pattern = '{<audio .+?src="([^"]+?)".+?</audio>}is';
+  $append = '<amp-audio src="$1"></amp-audio>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   // videoをamp-videoに置換する
-  $pattern = '/<video/i';
+  $pattern = '<video';
   $append = '<amp-video layout="responsive"';
-  $the_content = preg_replace($pattern, $append, $the_content);
-  $pattern = '/<\/video>/i';
+  $the_content = str_replace($pattern, $append, $the_content);
+  $pattern = '</video>';
   $append = '</amp-video>';
-  $the_content = preg_replace($pattern, $append, $the_content);
+  $the_content = str_replace($pattern, $append, $the_content);
 
 
   // YouTubeを置換する（埋め込みコード）
-  $pattern = '/<iframe[^>]+?src="https?:\/\/www.youtube.com\/embed\/([^\?"]+).*?".*?><\/iframe>/is';
+  $pattern = '{<iframe[^>]+?src="https?://www\.youtube\.com/embed/([^\?"]+)[^"]*?"[^>]*?></iframe>}is';
   $append = '<amp-youtube layout="responsive" data-videoid="$1" width="800" height="450"></amp-youtube>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
@@ -429,12 +436,12 @@ function convert_content_for_amp($the_content){
 
 
   //はてなブログカードiframe用の処理追加
-  $pattern = '{<iframe.+?src="(https?://hatenablog-parts\.com/embed.+?)".+?></iframe>}is';
+  $pattern = '{<iframe[^>]+?src="(https?://hatenablog-parts\.com/embed.+?)"[^>]+?></iframe>}is';
   $append = '<amp-iframe src="$1" width="500" height="190"></amp-iframe>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   //Amazon商品紹介iframeのAMP化
-  $pattern = '{<iframe.+?src="(.+?rcm-fe\.amazon-adsystem\.com.+?)".+?(width="(\d+)")?.(height="(\d+)")?.+?</iframe>}is';
+  $pattern = '{<iframe[^>]+?src="(.+?rcm-fe\.amazon-adsystem\.com[^"]+?)"[^>]+?(width="(\d+)")?.(height="(\d+)")?.+?</iframe>}is';
   if (preg_match_all($pattern, $the_content, $m)) {
     $all_idx = 0;
     $url_idx = 1;
@@ -496,9 +503,8 @@ function convert_content_for_amp($the_content){
     }
   }
 
-
   //スクリプトを除去する
-  $pattern = '/<p><script.+?<\/script><\/p>/i';
+  $pattern = '{(<p>)<script[^>]+?></script>(</p>)/}i';
   $append = '';
   $the_content = preg_replace($pattern, $append, $the_content);
   $pattern = '/<script(?!.*type="application\/json").+?<\/script>/is';
@@ -525,15 +531,20 @@ function convert_content_for_amp($the_content){
   $append = '';
   $the_content = preg_replace($pattern, $append, $the_content);
 
+  //画像拡大効果spotlightクラスの削除
+  $pattern = '<a class="spotlight" ';
+  $append = '<a ';
+  $the_content = str_replace($pattern, $append, $the_content);
+
   switch (get_amp_image_zoom_effect()) {
     case 'amp-image-lightbox':
       //amp-img を amp-image-lightbox 用に置換
-      $pattern     = '{<a href="[^"]+?/wp-content/uploads.+?"><amp-img(.+?)></a>}i';
-      $append      = '<amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"$1>';
+      $pattern     = '{<a ([a-z]+?="[^"]+?" )?href="[^"]+?/wp-content/uploads[^"]+?"><amp-img([^>]+?)></amp-img></a>}i';
+      // $append      = '<amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"$1></amp-img>';
 
       if (preg_match_all($pattern, $the_content, $m)) {
         $all_idx = 0;
-        $etc_idx = 1;
+        $etc_idx = 2;
         $i = 0;
         foreach ($m[$all_idx] as $tag) {
           $all_tag = $tag;
@@ -541,11 +552,11 @@ function convert_content_for_amp($the_content){
           if (preg_match('/class="(.+?)"/i', $etc_tag, $n)) {
             $etc_tag = preg_replace('/class=".+?"/i', '', $etc_tag );
             $the_content = str_replace($all_tag,
-            '<p><amp-img class="amp-lightbox amp-image-lightbox '.$n[1].'" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></p>',
+            '<p><amp-img class="amp-lightbox amp-image-lightbox '.$n[1].'" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></amp-img></p>',
               $the_content);
           } else {
             $the_content = str_replace($all_tag,
-              '<p><amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></p>',
+              '<p><amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></amp-img></p>',
               $the_content);
           }
           $i++;
@@ -554,10 +565,10 @@ function convert_content_for_amp($the_content){
       break;
     case 'amp-lightbox-gallery':
       // amp-img を amp-lightbox-gallery 用に置換
-      $pattern     = '{<a href="[^"]+?/wp-content/uploads.+?"><amp-img(.+?)></a>}i';
+      $pattern     = '{<a ([a-z]+?="[^"]+?" )?href="[^"]+?/wp-content/uploads[^"]+?"><amp-img([^>]+?)></amp-img></a>}i';
       if (preg_match_all($pattern, $the_content, $m)) {
         $all_idx = 0;
-        $etc_idx = 1;
+        $etc_idx = 2;
         $i = 0;
         foreach ($m[$all_idx] as $tag) {
           $all_tag = $tag;
@@ -565,11 +576,11 @@ function convert_content_for_amp($the_content){
           if (preg_match('/class="(.+?)"/i', $etc_tag, $n)) {
             $etc_tag = preg_replace('/class=".+?"/i', '', $etc_tag );
             $the_content = str_replace($all_tag,
-              '<p><amp-img class="amp-lightbox amp-lightbox-gallery '.$n[1].'" lightbox'.$etc_tag.'></p>',
+              '<p><amp-img class="amp-lightbox amp-lightbox-gallery '.$n[1].'" lightbox'.$etc_tag.'></amp-img></p>',
               $the_content);
           } else {
             $the_content = str_replace($all_tag,
-              '<p><amp-img class="amp-lightbox amp-lightbox-gallery" lightbox'.$etc_tag.'></p>',
+              '<p><amp-img class="amp-lightbox amp-lightbox-gallery" lightbox'.$etc_tag.'></amp-img></p>',
               $the_content);
           }
           $i++;

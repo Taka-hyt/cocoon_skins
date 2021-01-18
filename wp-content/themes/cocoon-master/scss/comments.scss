@@ -58,6 +58,11 @@
   }
 }
 
+//編集リンクの余白
+.comment-edit-link {
+  margin-left: 0.4em;
+}
+
 //返信ボタン
 .comment-reply-link{
   @extend .tag-link;
@@ -65,4 +70,18 @@
   // &:before{
   //   content: '\f0e5';
   // }
+}
+
+//コメントのページネーション
+.comment-page-link{
+  text-align: center;
+  .page-numbers{
+    width: auto;
+    height: auto;
+    padding: 6px 12px;
+    line-height: normal;
+  }
+  .current{
+    background-color:#eee;
+  }
 }

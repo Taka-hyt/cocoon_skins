@@ -5,10 +5,15 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
-if ( !defined( 'ABSPATH' ) ) exit; ?>
+if ( !defined( 'ABSPATH' ) ) exit;
+$article_id_attr = null;
+if (is_front_page_type_index()) {
+  $article_id_attr = ' id="post-'.get_the_ID().'"';
+}
+?>
 
 <a href="<?php echo esc_url(get_the_permalink()); ?>" class="entry-card-wrap a-wrap border-element cf" title="<?php echo esc_attr(get_the_title()); ?>">
-  <article id="post-<?php the_ID(); ?>" <?php post_class( array('post-'.get_the_ID(), 'entry-card','e-card', 'cf') ); ?>>
+  <article<?php echo $article_id_attr; ?> <?php post_class( array('post-'.get_the_ID(), 'entry-card','e-card', 'cf') ); ?>>
     <figure class="entry-card-thumb card-thumb e-card-thumb">
       <?php
       //サムネイルタグを取得
@@ -23,8 +28,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         );
       // サムネイルを持っているとき
       if ( has_post_thumbnail() && $thumbnail_tag ): ?>
-        <?php echo $thumbnail_tag;
-        //the_post_thumbnail(get_entry_card_thumbnail_size() , array('class' => 'entry-card-thumb-image card-thumb-image', 'alt' => '') ); ?>
+        <?php echo $thumbnail_tag; ?>
       <?php else: // サムネイルを持っていないとき ?>
         <?php echo get_entry_card_no_image_tag($count); ?>
       <?php endif; ?>
@@ -40,7 +44,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
       </div>
       <?php endif ?>
       <?php //PVエリアの表示
-      if (is_admin_index_pv_visible() && is_user_administrator()) {
+      if (is_admin_index_pv_visible() && is_user_administrator() || apply_filters('public_page_entry_card_pv_visible', false)) {
         get_template_part('tmp/admin-pv');
       } ?>
       <div class="entry-card-meta card-meta e-card-meta">

@@ -4,7 +4,7 @@
 @import 'brand-colors';
 
 //フォント
-$default_font: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+$default_font: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 $navi_font: FontAwesome, $default_font;
 
 //テキスト色
@@ -24,13 +24,10 @@ $basic_border_color: #ccc;
 $transparent_border_color: transparent;
 
 //色
-// $middle_thickness: #777879;
-// $thin: #cccdce;
-// $x_thin: #dddedf;
-$middle_thickness: #777;
-$thin: #ccc;
-$x_thin: #ddd;
-$xx_thin: #f3f4f5;
+$middle_thickness: #888;
+$thin: #ddd;
+$x_thin: #eee;
+$xx_thin: #f5f6f7;
 $xxx_thin: #fafbfc;
 //$current_bgc: #eeeff0;
 $current_bgc: #eee;
@@ -107,7 +104,7 @@ $bgc_hover_anime: all .3s ease-in-out;
 
 //Font Awesomeアイコンを出力するとき
 @mixin fontawesome($unicode:'/f004') {
-  //font-family: FontAwesome;
+  // font-family: FontAwesome;
   content: $unicode;
   //padding-right: 4px;
 }
@@ -440,10 +437,10 @@ $form_padding: 11px;
     }
     &.rcs-card-margin{
       a{
-        margin: .3em 0;
+        margin: 1%;
         width: 48%;
         &:last-child{
-          margin-right: 0;
+          margin-right: 1%;
         }
       }
     }

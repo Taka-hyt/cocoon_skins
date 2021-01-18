@@ -52,44 +52,34 @@ function fetch_thumbnail_image($matches, $key, $post_content, $post_id){
 
   //処理のためのURL取得
   $imageUrl = $matches[1][$key];
-
-  //_v($imageUrl);
+  // _v($imageUrl);
 
   //ファイル名の取得
   $filename = substr($imageUrl, (strrpos($imageUrl, '/'))+1);
+  // _v($filename);
 
   if (!(($uploads = wp_upload_dir(current_time('mysql')) ) && false === $uploads['error'])){
     return null;
   }
 
-    //ユニック（一意）ファイル名を生成
-    $filename = wp_unique_filename( $uploads['path'], $filename );
+  //ユニーク（一意）ファイル名を生成
+  $filename = wp_unique_filename( $uploads['path'], $filename );
+  // _v($filename);
 
-    //ファイルをアップロードディレクトリに移動
-    $new_file = $uploads['path'] . "/$filename";
+  //ファイルをアップロードディレクトリに移動
+  $new_file = $uploads['path'] . "/$filename";
 
-    if (!ini_get('allow_url_fopen')) {
-      return null;
-    } else {
-      $file_data = @wp_filesystem_get_contents($imageUrl);
-      // if ( WP_Filesystem() ) {//WP_Filesystemの初期化
-      //   global $wp_filesystem;//$wp_filesystemオブジェクトの呼び出し
-      //   //$wp_filesystemオブジェクトのメソッドとしてファイルを取得する
-      //   $file_data = @$wp_filesystem->get_contents($imageUrl);
-      // }
-    }
+  if (!ini_get('allow_url_fopen')) {
+    return null;
+  } else {
+    $file_data = @wp_filesystem_get_contents($imageUrl, true);
+  }
 
-    if (!$file_data) {
-      return null;
-    }
+  if (!$file_data) {
+    return null;
+  }
 
-    wp_filesystem_put_contents($new_file, $file_data);
-    // if ( WP_Filesystem() ) {//WP_Filesystemの初期化
-    //   global $wp_filesystem;//$wp_filesystemオブジェクトの呼び出し
-    //   //$wp_filesystemオブジェクトのメソッドとしてファイルに書き込む
-    //   $wp_filesystem->put_contents($new_file, $file_data);
-    // }
-  //}
+  wp_filesystem_put_contents($new_file, $file_data);
 
   //ファイルのパーミッションを正しく設定
   $stat = stat( dirname( $new_file ));
@@ -164,9 +154,6 @@ function auto_post_thumbnail_image($post_id) {
     return;
   }
 
-  // _v($post);
-  // _v('a='.get_post_meta($post_id, '_thumbnail_id', true).'b='.get_post_meta($post_id, 'skip_post_thumb', true).'c='.has_post_thumbnail());
-
   //アイキャッチが既に設定されているかチェック
   if (get_post_meta($post_id, '_thumbnail_id', true) || get_post_meta($post_id, 'skip_post_thumb', true)) {
       return;
@@ -184,13 +171,13 @@ function auto_post_thumbnail_image($post_id) {
 
   //投稿本文からすべての画像を取得
   preg_match_all('/<\s*img [^\>]*src\s*=\s*[\""\']?([^\""\'>]*).+?\/?>/i', $the_post[0]->post_content, $matches);
-  //var_dump($matches);
 
   //YouTubeのサムネイルを取得（画像がなかった場合）
   if (empty($matches[0])) {
     preg_match('%(?:youtube\.com/(?:user/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $the_post[0]->post_content, $match);
     if (!empty($match[1])) {
-      $matches=array(); $matches[0]=$matches[1]=array('http://img.youtube.com/vi/'.$match[1].'/mqdefault.jpg');
+      $matches = array();
+      $matches[0] = $matches[1] = array('https://i.ytimg.com/vi/'.$match[1].'/maxresdefault.jpg');
     }
   }
 
@@ -206,7 +193,7 @@ function auto_post_thumbnail_image($post_id) {
       if (!$thumb_id &&
          //画像のパスにホームアドレスが含まれているとき
          ( strpos($image, home_url()) !== false ) ) {
-        //$image = substr($image, strpos($image, '"')+1);
+
         preg_match('/src *= *"([^"]+)/i', $image, $m);
         $image = $m[1];
         if ( isset($m[1]) ) {
@@ -242,10 +229,10 @@ function auto_post_thumbnail_image($post_id) {
 
       //それでもサムネイルIDが見つからなかったら、画像をURLから取得する
       if (!$thumb_id) {
+        // _v($matches);
         $thumb_id = fetch_thumbnail_image($matches, $key, $the_post[0]->post_content, $post_id);
       }
 
-      //$thumb_id = 627;
       //サムネイルの取得に成功したらPost Metaをアップデート
       if ($thumb_id) {
         update_post_meta( $post_id, '_thumbnail_id', $thumb_id );

@@ -8,16 +8,6 @@
   box-sizing: border-box;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  //word-break: break-all;
-
-  // &::selection {
-  //   background: $select_bgc;
-  //   color: $text_color;
-  // }
-  // &::-moz-selection {
-  //   background: $select_bgc;
-  //   color: $text_color;
-  // }
 }
 
 .container{
@@ -63,7 +53,7 @@ a{
 }
 
 ol, ul{
-  margin: 1em 0;
+  // margin-bottom: 1.2em;
   padding-left: 40px;
 }
 

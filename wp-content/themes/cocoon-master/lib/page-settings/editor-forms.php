@@ -61,8 +61,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </td>
         </tr>
 
-
-        <?php if(false): ?>
         <!-- タグ -->
         <tr>
           <th scope="row">
@@ -76,8 +74,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             ?>
           </td>
         </tr>
-        <?php endif; ?>
-
 
         </tbody>
     </table>
@@ -148,6 +144,20 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
             generate_checkbox_tag(OP_BLOCK_EDITOR_RANKING_SHORTCODE_DROPDOWN_VISIBLE , is_block_editor_ranking_shortcode_dropdown_visible(), __( 'ランキング表示', THEME_NAME ));
             generate_tips_tag(__( 'ツールバーのランキングショートコードドロップダウンを表示するか。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+
+        <!-- ブロックオプション -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('ブロックオプション', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_BLOCK_EDITOR_STYLE_BLOCK_OPTION_VISIBLE , is_block_editor_style_block_option_visible(), __( 'スタイル表示', THEME_NAME ));
+            generate_tips_tag(__( 'ブロックエディターのスタイルオプションの表示を表示するか。', THEME_NAME ));
             ?>
           </td>
         </tr>

@@ -15,7 +15,7 @@ function get_blogcard_thumbnail_image_tag($url, $in = true){
   } else {
     $class = ' external-blogcard-thumb-image';
   }
-  return '<img src="'.$url.'" alt="" class="blogcard-thumb-image'.$class.'" width="'.THUMB160WIDTH_DEF.'" height="'.THUMB160HEIGHT_DEF.'" />';
+  return get_original_image_tag($url, THUMB160WIDTH_DEF, THUMB160HEIGHT_DEF, $class);
 }
 endif;
 
@@ -157,7 +157,7 @@ function url_to_internal_blogcard_tag($url){
   //ファビコン
   $favicon_tag =
   '<div class="blogcard-favicon internal-blogcard-favicon">'.
-    '<img src="//www.google.com/s2/favicons?domain='.get_the_site_domain().'" class="blogcard-favicon-image internal-blogcard-favicon-image" alt="" width="16" height="16" />'.
+    get_original_image_tag('https://www.google.com/s2/favicons?domain='.get_the_site_domain(), 16, 16, 'blogcard-favicon-image internal-blogcard-favicon-image').
   '</div>';
 
   //サイトロゴ

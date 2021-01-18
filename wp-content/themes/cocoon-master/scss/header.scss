@@ -5,6 +5,7 @@
 .header{
   @extend %background_image;
   height: 100%;
+  flex-shrink: 0;
 }
 
 .header-in{
@@ -105,6 +106,7 @@
     img{
       max-height: 60px;
       height: auto;
+      vertical-align: middle;
     }
   }
 
@@ -132,7 +134,10 @@
   }
 
   .logo-header{
-    height: 40px;
+    max-height: 40px;
+    img{
+      max-height: 40px;
+    }
   }
 
   .navi-in > ul > li,
@@ -163,6 +168,12 @@
 
 //スリムサイズのグローバルナビ
 $slim_height: 40px;
+.fixed-header .cl-slim .logo-header{
+  max-height: $slim_height;
+  img{
+    max-height: $slim_height;
+  }
+}
 .cl-slim .navi-in > ul li{
   height: $slim_height;
   line-height: $slim_height;

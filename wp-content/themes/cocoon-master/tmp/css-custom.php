@@ -7,15 +7,6 @@
  */
 if ( !defined( 'ABSPATH' ) ) exit; ?>
 
-<?php //モバイルサイトフォント
-if (get_mobile_site_font_size()): ?>
-@media screen and (max-width: 480px){
-  .page-body,
-  .menu-content{
-    font-size: <?php echo get_mobile_site_font_size(); ?>;
-  }
-}
-<?php endif ?>
 <?php //サイトキー色
 if (get_site_key_color()): ?>
 #header-container,
@@ -423,6 +414,7 @@ body::after{
   width: 1px;
   height: 1px;
   overflow: hidden;
+  display: inline !important;
 }
 <?php endif ?>
 <?php //アピールエリア背景色
@@ -598,6 +590,7 @@ if ($entry_content_line_hight = get_entry_content_line_hight()): ?>
 }
   <?php //管理画面用
   if(is_admin() && is_gutenberg_editor_enable()): ?>
+  .main,
   .main p,
   .main p.wp-block-paragraph {
     line-height: <?php echo $entry_content_line_hight; ?>;
@@ -605,34 +598,143 @@ if ($entry_content_line_hight = get_entry_content_line_hight()): ?>
   <?php endif; ?>
 <?php endif ?>
 <?php //行の余白
-if ($entry_content_margin_hight = get_entry_content_margin_hight()): ?>
+// $entry_content_line_hight = get_entry_content_line_hight()
+// if (!$entry_content_line_hight) {
+//   $entry_content_line_hight = OP_ENTRY_CONTENT_LINE_HIGHT_DEFAULT;
+// }
+$entry_content_margin_hight = get_entry_content_margin_hight();
+if (!$entry_content_margin_hight) {
+  $entry_content_margin_hight = OP_ENTRY_CONTENT_MARGIN_HIGHT_DEFAULT;
+} ?>
+/*
 .entry-content > *,
-.demo .entry-content p {
-  margin-top: <?php echo $entry_content_margin_hight; ?>em;
+*/
+.article p,
+.demo .entry-content p,
+.article dl,
+.article ul,
+.article ol,
+.article blockquote,
+.article pre,
+.article table,
+.article .author-box,
+.article .blogcard-wrap,
+.article .login-user-only,
+.article .information-box,
+.article .question-box,
+.article .alert-box,
+.article .information,
+.article .question,
+.article .alert,
+.article .memo-box,
+.article .comment-box,
+.article .common-icon-box,
+.article .blank-box,
+.article .button-block,
+.article .micro-bottom,
+.article .caption-box,
+.article .tab-caption-box,
+.article .label-box,
+.article .toggle-wrap,
+.article .wp-block-image,.booklink-box,
+.article .kaerebalink-box,
+.article .tomarebalink-box,
+.article .product-item-box,
+.article .speech-wrap,
+.article .toc,
+.article .column-wrap,
+.article .new-entry-cards,
+.article .popular-entry-cards,
+.article .navi-entry-cards,
+.article .box-menus,
+.article .ranking-item,
+.article .wp-block-categories,
+.article .wp-block-archives,
+.article .wp-block-archives-dropdown,
+.article .wp-block-calendar,
+.article .rss-entry-cards,
+.article .ad-area,
+.article .wp-block-gallery,
+.article .wp-block-audio,
+.article .wp-block-cover,
+.article .wp-block-file,
+.article .wp-block-media-text,
+.article .wp-block-video,
+.article .wp-block-buttons,
+.article .wp-block-columns,
+.article .wp-block-separator,
+.article .components-placeholder,
+.article .wp-block-search,
+.article .wp-block-social-links,
+.article .timeline-box,
+.article .blogcard-type,
+.article .btn-wrap,
+.article .btn-wrap a,
+.article .block-box,
+.article .wp-block-embed,
+.article .wp-block-group,
+.article .wp-block-table,
+.article .scrollable-table,
+.article .wp-block-separator,
+[data-type="core/freeform"] {
   margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
 }
-.entry-content > .micro-top{
-  margin-bottom: -<?php echo $entry_content_margin_hight * 1.1; ?>em;
+.article h2,
+.article h3,
+.article h4,
+.article h5,
+.article h6{
+  margin-bottom: <?php echo $entry_content_margin_hight * get_site_font_size(); ?>px;
 }
-.entry-content > .micro-balloon{
-  margin-bottom: -<?php echo $entry_content_margin_hight * 0.8; ?>em;
+<?php //モバイルサイトフォント
+$mobile_site_font_size = get_mobile_site_font_size();
+if ($mobile_site_font_size): ?>
+@media screen and (max-width: 480px){
+  .page-body,
+  .menu-content{
+    font-size: <?php echo $mobile_site_font_size; ?>;
+  }
+  <?php //本文中の見出しの余白調整 ?>
+  .article h2,
+  .article h3,
+  .article h4,
+  .article h5,
+  .article h6{
+    margin-bottom: <?php echo $entry_content_margin_hight * $mobile_site_font_size; ?>px;
+  }
 }
-.entry-content > .micro-bottom{
-  margin-top: -<?php echo $entry_content_margin_hight * 1.1; ?>em;
-}
-.entry-content > .micro-bottom.micro-balloon{
-  margin-top: -<?php echo $entry_content_margin_hight * 0.8; ?>em;
-  margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
-}
-  <?php ////管理画面用
-  if(is_admin() && is_gutenberg_editor_enable()): ?>
-  .main p,
-  .main p.wp-block-paragraph {
-    margin-top: <?php echo $entry_content_margin_hight; ?>em;
+<?php endif ?>
+@media screen and (max-width:781px) {
+  .wp-block-column{
     margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
   }
-  <?php endif; ?>
-<?php endif ?>
+}
+@media screen and (max-width:599px) {
+  .column-wrap > div{
+    margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
+  }
+}
+.article h2,
+.article h3,
+.article h4,
+.article h5,
+.article h6 {
+  margin-top: <?php echo round($entry_content_margin_hight * 1.3333, 2); ?>em;
+}
+.article .micro-top{
+  margin-bottom: <?php echo $entry_content_margin_hight * 0.2; ?>em;
+}
+.article .micro-bottom{
+  margin-top: -<?php echo $entry_content_margin_hight * 0.9; ?>em;
+}
+
+.article .micro-balloon{
+  margin-bottom: <?php echo $entry_content_margin_hight * 0.5; ?>em;
+}
+.article .micro-bottom.micro-balloon{
+  margin-top: -<?php echo $entry_content_margin_hight * 0.7; ?>em;
+}
+
 .blank-box.bb-key-color{
   border-color: <?php echo get_editor_key_color(); ?>;
 }

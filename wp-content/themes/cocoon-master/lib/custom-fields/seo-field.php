@@ -14,10 +14,10 @@ add_action('admin_menu', 'add_seo_custom_box');
 if ( !function_exists( 'add_seo_custom_box' ) ):
 function add_seo_custom_box(){
   //SEOボックス
-  add_meta_box( 'singular_seo_settings',__( 'SEO設定', THEME_NAME ), 'seo_custom_box_view', 'post', 'normal', 'core' );
-  add_meta_box( 'singular_seo_settings',__( 'SEO設定', THEME_NAME ), 'seo_custom_box_view', 'page', 'normal', 'core' );
+  add_meta_box( 'singular_seo_settings',__( 'SEO', THEME_NAME ), 'seo_custom_box_view', 'post', 'normal', 'core' );
+  add_meta_box( 'singular_seo_settings',__( 'SEO', THEME_NAME ), 'seo_custom_box_view', 'page', 'normal', 'core' );
   //カスタム投稿タイプに登録
-  add_meta_box_custom_post_types( 'singular_seo_settings',__( 'SEO設定', THEME_NAME ), 'seo_custom_box_view', 'custum_post', 'normal', 'core' );
+  add_meta_box_custom_post_types( 'singular_seo_settings',__( 'SEO', THEME_NAME ), 'seo_custom_box_view', 'custum_post', 'normal', 'core' );
 }
 endif;
 
@@ -272,3 +272,24 @@ if ( !function_exists( 'get_the_page_canonical_url' ) ):
     return $value;
   }
   endif;
+
+//投稿のnoindexページIDの取得
+if ( !function_exists( 'get_noindex_post_ids' ) ):
+function get_noindex_post_ids(){
+  return get_postmeta_value_enable_post_ids('the_page_noindex');
+}
+endif;
+
+//カテゴリーのnoindexページIDの取得
+if ( !function_exists( 'get_noindex_category_ids' ) ):
+function get_noindex_category_ids(){
+  return get_termmeta_value_enable_ids('the_category_noindex');
+}
+endif;
+
+//タグのnoindexページIDの取得
+if ( !function_exists( 'get_noindex_tag_ids' ) ):
+function get_noindex_tag_ids(){
+  return get_termmeta_value_enable_ids('the_tag_noindex');
+}
+endif;

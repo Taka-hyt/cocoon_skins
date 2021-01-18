@@ -103,7 +103,9 @@
       var footerCurrentPos = $(this).scrollTop();
       if (footerCurrentPos > footerStartPos) {
         if(footerCurrentPos >= 100) {
-          footerMenu.css("bottom", "-" + footerHeight + "px");
+          // footerMenu.css("bottom", "-" + footerHeight + "px");
+          // footerMenu.css("bottom","-"+footerHeight+"+env(safe-area-inset-bottom)px");
+          footerMenu.css("bottom","calc( -1 * (env(safe-area-inset-bottom) + " + footerHeight + "px) )");
         }
       } else {
         footerMenu.css("bottom", 0);
@@ -129,9 +131,6 @@
     $('#comment-reply-btn').slideUp();
     $('#respond').slideDown();
   });
-
-    //カレーセルの表示
-    $('.carousel').fadeIn(1000);
 
   //Google検索ボタン
   $('.sbtn').click(function(){
@@ -174,6 +173,10 @@
     if ($(this).has('.logo-menu-button').length) {
       $(this).addClass('has-logo-button');
     }
+  });
+
+  $(window).load(function(){
+    $('#carousel').addClass('loaded');
   });
 
 /*

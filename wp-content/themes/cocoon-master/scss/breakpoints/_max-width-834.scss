@@ -25,7 +25,7 @@
 
 main.main,
 div.sidebar{
-  padding: 16px;
+  padding: 16px 24px;
   margin: 10px 0;
   border-width: 0;
 }
@@ -241,7 +241,7 @@ table{
 
 .header-container-in.hlt-top-menu {
   display: block;
-  #header{
+  .header{
     .header-in,
     .logo-text{
       display: block;

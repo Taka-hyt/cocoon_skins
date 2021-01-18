@@ -116,3 +116,9 @@ CSS参考
 [31o3](https://github.com/31o3)
 
 [Daisuke Sato](https://github.com/Tiryoh)
+
+[Yukihiko Shinoda](https://github.com/yukihiko-shinoda)
+
+[stedplay](https://github.com/stedplay)
+
+[1008k](https://github.com/1008k)

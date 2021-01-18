@@ -82,7 +82,7 @@ if (!is_amp()): ?>
       if (!$("#header-container").hasClass("fixed-header")) {
         <?php if (get_header_layout_type_center_logo()): ?>
         /*トップメニュータイプに変更する*/
-        $("#header-container-in").removeClass('hlt-center-logo hlt-center-logo-top-menu cl-slim').addClass("hlt-top-menu wrap");
+        $("#header-container-in").removeClass('hlt-center-logo hlt-center-logo-top-menu').addClass("hlt-top-menu wrap");
         <?php endif; ?>
         $("#header-container").addClass("fixed-header");
         $("#header-container").css({
@@ -121,13 +121,19 @@ if (!is_amp()): ?>
       var s1 = (prevScrollTop > threashold);
       var s2 = (scrollTop > threashold);
       var w = $window.width();
+      // console.log(scrollTop);
+
       /*スクロールエリアの位置調整*/
       function adjustScrollArea(selector) {
 
         if ($(selector) && $(selector).offset()) {
           offset = $(selector).offset().top;
+          // console.log(offset);
           h = $("#header-container").height();
+          // console.log(h);
           pt = $(selector).css('padding-top');
+          // console.log(pt);
+
           if (pt) {
             pt = pt.replace('px', '');
           } else {
@@ -135,7 +141,7 @@ if (!is_amp()): ?>
           }
 
           if ((scrollTop >= offset - h) && (w >  mobileWidth)) {
-            if (pt <= 1) {
+            if ((pt <= 1) && $("#header-container").hasClass('fixed-header')) {
               $(selector).css({
                 'padding-top': h + 'px',
               });
@@ -164,7 +170,7 @@ if (!is_amp()): ?>
             stickyHeader();
           }
         }
-        if (scrollTop == 0 || w <=  mobileWidth) {
+        if (scrollTop <= 50 || w <=  mobileWidth) {
           staticHeader();
         }
       }
@@ -182,7 +188,12 @@ if (!is_amp()): ?>
       if (w <=  mobileWidth) {/*モバイル端末の場合*/
         staticHeader();
       } else {/*パソコン端末の場合*/
-        stickyHeader();
+        var scrollTop = $window.scrollTop();
+        console.log(scrollTop);
+        if (scrollTop >= 50) {
+          stickyHeader();
+        }
+
       }
     });
 

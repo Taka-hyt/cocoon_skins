@@ -83,7 +83,8 @@ if ( is_external_blogcard_enable() ) {//外部リンクブログカードが有�
 
 //外部サイトからブログカードサムネイルを取得する
 if ( !function_exists( 'fetch_card_image' ) ):
-function fetch_card_image($image){
+function fetch_card_image($image, $url = null){
+  //var_dump($image);
   //URLの？以降のクエリを削除
   $image = preg_replace('/\?.*$/i', '', $image);
   $filename = substr($image, (strrpos($image, '/'))+1);
@@ -111,13 +112,23 @@ function fetch_card_image($image){
     }
     //ローカル画像ファイルパス
     $new_file = $dir.md5($image).'.'.$ext;
+    // var_dump($new_file);
 
     if ( $file_data ) {
       wp_filesystem_put_contents($new_file, $file_data);
       //画像編集オブジェクトの作成
       $image_editor = wp_get_image_editor($new_file);
       if ( !is_wp_error($image_editor) ){
-        $image_editor->resize(THUMB160WIDTH, THUMB160HEIGHT, true);
+        if (is_amazon_site_page($url)) {
+          $width = apply_filters('external_blogcard_amazon_image_width',THUMB160WIDTH );
+          $height = apply_filters('external_blogcard_amazon_image_height',THUMB160WIDTH );
+          $image_editor->resize($width, $height, true);
+        } else {
+          $width = apply_filters('external_blogcard_image_width',THUMB160WIDTH );
+          $height = apply_filters('external_blogcard_image_height',THUMB160HEIGHT );
+          $image_editor->resize($width, $height, true);
+        }
+
         $image_editor->save( $new_file );
         return str_replace(WP_CONTENT_DIR, content_url(), $new_file);
       }
@@ -167,7 +178,7 @@ function url_to_external_ogp_blogcard_tag($url){
       $ogp = 'error';
     } else {
       //キャッシュ画像の取得
-      $res = fetch_card_image($ogp->image);
+      $res = fetch_card_image($ogp->image, $url);
 
       if ( $res ) {
         $ogp->image = $res;
@@ -246,7 +257,9 @@ function url_to_external_ogp_blogcard_tag($url){
 
   //GoogleファビコンAPIを利用する
   ////www.google.com/s2/favicons?domain=nelog.jp
-  $favicon_tag = '<div class="blogcard-favicon external-blogcard-favicon"><img src="//www.google.com/s2/favicons?domain='.$domain.'" class="blogcard-favicon-image" alt="" width="16" height="16" /></div>';
+  $favicon_tag = '<div class="blogcard-favicon external-blogcard-favicon">'.
+    get_original_image_tag('https://www.google.com/s2/favicons?domain='.$domain, 16, 16, 'blogcard-favicon-image external-blogcard-favicon-image').
+  '</div>';
 
   //サイトロゴ
   $site_logo_tag = '<div class="blogcard-domain external-blogcard-domain">'.$domain.'</div>';
@@ -255,7 +268,7 @@ function url_to_external_ogp_blogcard_tag($url){
   //サムネイルを取得できた場合
   $image = apply_filters('get_external_blogcard_thumbnail_url', $image);
   if ( $image ) {
-    $thumbnail = '<img src="'.esc_url($image).'" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="'.THUMB160WIDTH.'" height="'.THUMB160HEIGHT.'" />';
+    $thumbnail = get_original_image_tag($image, THUMB160WIDTH, THUMB160HEIGHT, 'blogcard-thumb-image external-blogcard-thumb-image');
   }
 
   //取得した情報からブログカードのHTMLタグを作成

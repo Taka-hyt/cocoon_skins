@@ -72,9 +72,24 @@ function get_the_nolink_category($id = null, $is_visible = true){
     return;
   }
 
-  if ( isset($categories[0]) ) {
-    $category = $categories[0];
-    $category = apply_filters('get_the_nolink_category', $category, $categories);
+  //メインカテゴリが指定してある場合は該当カテゴリーを適用
+  $category = isset($categories[0]) ? $categories[0] : null;
+  $main_cat_id = get_the_page_main_category($id);
+  if ($main_cat_id && in_category($main_cat_id, $id)) {
+    $category = get_category($main_cat_id);
+  }
+  // var_dump($id);
+  // var_dump($main_cat_id);
+  // var_dump($category->cat_ID);
+
+  // //メインカテゴリがない場合は先頭のカテゴリを適用
+  // if ( !$category ) {
+  //   $category = $categories[0];
+  // }
+
+  //カテゴリーラベル制御用のフック
+  $category = apply_filters('get_the_nolink_category', $category, $categories);
+  if (isset($category->cat_ID) && isset($category->cat_name)) {
     return '<span class="cat-label cat-label-'.$category->cat_ID.$display_class.'">'.$category->cat_name.'</span>';
   }
 }
@@ -453,8 +468,8 @@ function wp_enqueue_script_theme_js(){
   ) );
   wp_localize_script( THEME_JS, $name, $value );
 
-  // TODO: ファイル読みこみ位置 もしくは HTML側に直接出力など よい方法を考慮
-  wp_enqueue_script( 'set-event-passive', SET_EVENT_PASSIVE_JS_URL, array( ), false, true );
+  // // TODO: ファイル読みこみ位置 もしくは HTML側に直接出力など よい方法を考慮
+  // wp_enqueue_script( 'set-event-passive', SET_EVENT_PASSIVE_JS_URL, array( ), false, true );
 }
 endif;
 
@@ -648,9 +663,6 @@ endif;
 //clingifyの読み込み
 if ( !function_exists( 'wp_enqueue_clingify' ) ):
 function wp_enqueue_clingify(){
-  // $browser_info = get_browser_info();
-  // $is_ie = $browser_info['browser_name'] == 'IE';
-  // $is_edge_version_under_16 = ($browser_info['browser_name'] == 'IE') && (intval($browser_info['browser_version']) < 16);
   //グローバルナビ追従が有効な時
   if ( is_header_fixed() ) {
     //clingifyスタイルの呼び出し
@@ -763,7 +775,9 @@ function wp_enqueue_slicknav(){
     wp_enqueue_script( 'slicknav-js', get_template_directory_uri() . '/plugins/slicknav/jquery.slicknav.min.js', array( 'jquery' ), false, true  );
     $data = minify_js('
               (function($){
-                $(".menu-header").slicknav();
+                $(".menu-header").slicknav({
+                  label: "'.apply_filters('wp_enqueue_slicknav_label', 'MENU').'",
+                });
               })(jQuery);
             ');
     wp_add_inline_script( 'slicknav-js', $data, 'after' ) ;
@@ -2236,7 +2250,7 @@ function is_the_page_sidebar_visible(){
       $is_sidebar_visible = false;
       break;
     case 'no_display_front_page':
-      if (is_front_page() && !is_home()) {
+      if (is_front_page()) {
         $is_sidebar_visible = false;
       }
       break;
@@ -2286,7 +2300,7 @@ function is_the_page_sidebar_visible(){
   }
 
   //サイドバーにウィジェットが入っていない場合
-  if (!is_active_sidebar( 'sidebar' )) {
+  if (!is_active_sidebar( 'sidebar' ) && !is_active_sidebar( 'sidebar-scroll' )) {
     $is_sidebar_visible = false;
   }
 
@@ -2586,7 +2600,7 @@ function get_singular_sns_share_image_url(){
     $image_id = get_post_thumbnail_id();
     $image = wp_get_attachment_image_src( $image_id, 'full');
     $sns_image_url = $image[0];
-  } else if ( preg_match( $searchPattern, $content, $image ) && !is_archive()) {//投稿にサムネイルは無いが画像がある場合の処理
+  } else if ( preg_match( $searchPattern, $content, $image ) && !is_archive()) {//投稿にアイキャッチは無いが画像がある場合の処理
     $sns_image_url = $image[2];
   } else if ( $no_image_url = get_no_image_url() ){//NO IMAGEが設定されている場合
     $sns_image_url = $no_image_url;
@@ -2806,10 +2820,11 @@ if ( !function_exists( 'get_editor_key_color' ) ):
 function get_editor_key_color(){
   $site_key_color = get_site_key_color();
   if (!empty($site_key_color)) {
-    return $site_key_color;
+    $color = $site_key_color;
   } else {
-    return DEFAULT_EDITOR_KEY_COLOR;
+    $color = DEFAULT_EDITOR_KEY_COLOR;
   }
+  return apply_filters('get_editor_key_color', $color);
 }
 endif;
 
@@ -3285,6 +3300,25 @@ function change_fa($buffer){
 }
 endif;
 
+//WordPress「表示設定」の「1ページに表示する最大投稿数」を取得する
+if ( !function_exists( 'get_option_posts_per_page' ) ):
+function get_option_posts_per_page(){
+  return intval(get_option('posts_per_page'));
+}
+endif;
+
+//カテゴリーIDからカテゴリ名を取得
+if ( !function_exists( 'get_category_name_by_id' ) ):
+function get_category_name_by_id($id){
+  //カテゴリIDからカテゴリ情報取得
+  $category = get_category($id);
+  if (isset($category->cat_name)) {
+    //カテゴリ名表示
+    return $category->cat_name;
+  }
+}
+endif;
+
 //barba.jsのネームスペース
 if ( !function_exists( 'get_barba_name_space' ) ):
 function get_barba_name_space(){
@@ -3303,5 +3337,77 @@ function get_rel_by_target($target){
   if ($target == '_blank') {
     return ' rel="noopener"';
   }
+}
+endif;
+
+//存在するカテゴリIDかどうか
+if ( !function_exists( 'is_category_exist' ) ):
+function is_category_exist($cat_id){
+  return is_numeric($cat_id) && get_category($cat_id);
+}
+endif;
+
+//管理ページが投稿か
+if ( !function_exists( 'is_admin_single' ) ):
+function is_admin_single(){
+  global $post_type;
+  return $post_type !== 'page';
+}
+endif;
+
+//管理ページが固定ページか
+if ( !function_exists( 'is_admin_page' ) ):
+function is_admin_page(){
+  global $post_type;
+  return $post_type === 'page';
+}
+endif;
+
+//URLがAmazonかどうか
+if ( !function_exists( 'is_amazon_site_page' ) ):
+function is_amazon_site_page($URI){
+  return includes_string($URI, '//amzn.to/') || includes_string($URI, '//www.amazon.co');
+}
+endif;
+
+//投稿の個別noindex idをすべて取得する
+if ( !function_exists( 'get_postmeta_value_enable_post_ids' ) ):
+function get_postmeta_value_enable_post_ids($meta_key){
+  global $wpdb;
+  $res = $wpdb->get_results("SELECT DISTINCT GROUP_CONCAT(post_id) AS ids FROM {$wpdb->prefix}postmeta WHERE (meta_key = '{$meta_key}') AND (meta_value = 1)");
+  $result = (isset($res[0]) && $res[0]->ids) ? explode(',', $res[0]->ids) : array();
+  return $result;
+}
+endif;
+
+//カテゴリーの個別noindex idをすべて取得する
+if ( !function_exists( 'get_termmeta_value_enable_ids' ) ):
+function get_termmeta_value_enable_ids($meta_key){
+  global $wpdb;
+  $res = $wpdb->get_results("SELECT DISTINCT GROUP_CONCAT(term_id) AS ids FROM {$wpdb->prefix}termmeta WHERE (meta_key = '{$meta_key}') AND (meta_value = 1)");
+  $result = (isset($res[0]) && $res[0]->ids) ? explode(',', $res[0]->ids) : array();
+  return $result;
+}
+endif;
+
+//WordPress5.5以上かどうか
+if ( !function_exists( 'is_wp_5_5_or_over' ) ):
+function is_wp_5_5_or_over(){
+  return get_bloginfo('version') >= '5.5';
+}
+endif;
+
+//WordPress5.5からのLazy Loadが有効な環境かどうか
+if ( !function_exists( 'is_wp_lazy_load_valid' ) ):
+function is_wp_lazy_load_valid(){
+  global $is_safari;
+  return is_wp_5_5_or_over() && !$is_safari;
+}
+endif;
+
+//エディターでページタイプでスタイルを変更する用のclassを出力
+if ( !function_exists( 'get_editor_page_type_class' ) ):
+function get_editor_page_type_class(){
+  return is_singular_page_type_wide() ? ' page-type-wide' : '';
 }
 endif;

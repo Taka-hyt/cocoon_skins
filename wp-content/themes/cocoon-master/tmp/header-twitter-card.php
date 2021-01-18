@@ -39,7 +39,7 @@ if (is_singular()){//単一記事ページの場合
 
   if ( is_tag() ) {//タグ用設定
     $description = get_tag_meta_description();
-    if ($tag_title =  get_the_tag_title(get_query_var('tag_id'))) {
+    if ($tag_title =  get_the_tag_title(get_queried_object_id())) {
       $title = $tag_title;
     } else {
       $title = wp_title(null, false).' | '.get_bloginfo('name');
@@ -61,7 +61,7 @@ if (is_singular()){//単一記事ページの場合
 } else {//単一記事ページページ以外の場合（アーカイブページやホームなど）
   if (is_category() && !is_paged() && $eye_catch = get_the_category_eye_catch_url(get_query_var('cat'))) {
     $ogp_image = $eye_catch;
-  } elseif (is_tag() && !is_paged() && $eye_catch = get_the_tag_eye_catch_url(get_query_var('tag_id'))) {
+  } elseif (is_tag() && !is_paged() && $eye_catch = get_the_tag_eye_catch_url(get_queried_object_id())) {
     $ogp_image = $eye_catch;
   } elseif ( get_ogp_home_image_url() ) {
     $ogp_image = get_ogp_home_image_url();
@@ -76,8 +76,11 @@ if (is_singular()){//単一記事ページの場合
 }
 ?>
 <meta name="twitter:domain" content="<?php echo esc_attr(get_the_site_domain()) ?>">
-<?php if ( get_the_author_twitter_url() )://TwitterIDが設定されている場合 ?>
-<meta name="twitter:creator" content="@<?php echo esc_attr( get_the_author_twitter_id() ) ?>">
-<meta name="twitter:site" content="@<?php echo esc_attr( get_the_author_twitter_id() ) ?>">
+<?php
+$twitter_id = get_the_author_twitter_id();//Twitter IDの取得
+if ( $twitter_id )://TwitterIDが設定されている場合
+ ?>
+<meta name="twitter:creator" content="@<?php echo esc_attr($twitter_id); ?>">
+<meta name="twitter:site" content="@<?php echo esc_attr($twitter_id); ?>">
 <?php endif; ?>
 <!-- /Twitter Card -->

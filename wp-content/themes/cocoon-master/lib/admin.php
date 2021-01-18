@@ -613,12 +613,12 @@ jQuery(function($) {
 endif;
 
 //デフォルトの抜粋入力欄をビジュアルエディターにする
-add_action( 'add_meta_boxes', array ( 'VisualEditorExcerpt', 'switch_boxes' ) );
+// add_action( 'add_meta_boxes', array ( 'VisualEditorExcerpt', 'switch_boxes' ) );
 if ( !class_exists( 'VisualEditorExcerpt' ) ):
 class VisualEditorExcerpt{
   public static function switch_boxes()
   {
-    if ( ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )    {
+    if ( isset($GLOBALS['post']) && ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )    {
       return;
     }
     $current_screen = get_current_screen();
@@ -697,7 +697,7 @@ function tiny_mce_before_init_custom( $mceInit ) {
   if (isset($mceInit['body_class'])) {
     //if (!is_plugin_fourm_page()) {
       $fa_class = ' '.get_site_icon_font_class();
-      $mceInit['body_class'] .= ' body main article'.$fa_class;
+      $mceInit['body_class'] .= ' body main article'.$fa_class.get_editor_page_type_class();
     //}
 
     if (is_admin()) {
@@ -743,17 +743,17 @@ endif;
 // }
 // endif;
 
-// //グーテンベルグとクラシックエディターのタグをチェックリストボックス形式にする
-// //参考：https://nldot.info/how-to-change-the-tags-to-checkbox-in-gutenberg/
-// if (is_editor_tag_check_list_enable()) {
-//   add_action( 'init', 'register_tag_check_list', 1 );
-// }
-// if ( !function_exists( 'register_tag_check_list' ) ):
-// function register_tag_check_list() {
-//   $tag_slug_args = get_taxonomy('post_tag'); // returns an object
-//   $tag_slug_args->hierarchical = true;
-//   $tag_slug_args->meta_box_cb = 'post_categories_meta_box';
+//グーテンベルグとクラシックエディターのタグをチェックリストボックス形式にする
+//参考：https://nldot.info/how-to-change-the-tags-to-checkbox-in-gutenberg/
+if (is_editor_tag_check_list_enable()) {
+  add_action( 'init', 'register_tag_check_list', 1 );
+}
+if ( !function_exists( 'register_tag_check_list' ) ):
+function register_tag_check_list() {
+  $tag_slug_args = get_taxonomy('post_tag'); // returns an object
+  $tag_slug_args->hierarchical = true;
+  $tag_slug_args->meta_box_cb = 'post_categories_meta_box';
 
-//   register_taxonomy( 'post_tag', 'post',(array) $tag_slug_args);
-// }
-// endif;
+  register_taxonomy( 'post_tag', 'post',(array) $tag_slug_args);
+}
+endif;

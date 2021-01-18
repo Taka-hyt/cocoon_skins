@@ -52,13 +52,13 @@ function get_editor_text_color(){
 }
 endif;
 
-// //タグをチェックリストにするか
-// define('OP_EDITOR_TAG_CHECK_LIST_ENABLE', 'editor_tag_check_list_enable');
-// if ( !function_exists( 'is_editor_tag_check_list_enable' ) ):
-// function is_editor_tag_check_list_enable(){
-//   return get_theme_option(OP_EDITOR_TAG_CHECK_LIST_ENABLE);
-// }
-// endif;
+//タグをチェックリストにするか
+define('OP_EDITOR_TAG_CHECK_LIST_ENABLE', 'editor_tag_check_list_enable');
+if ( !function_exists( 'is_editor_tag_check_list_enable' ) ):
+function is_editor_tag_check_list_enable(){
+  return get_theme_option(OP_EDITOR_TAG_CHECK_LIST_ENABLE);
+}
+endif;
 
 //ルビボタン有効
 define('OP_BLOCK_EDITOR_RUBY_BUTTON_VISIBLE', 'block_editor_ruby_button_visible');
@@ -129,6 +129,14 @@ define('OP_BLOCK_EDITOR_RANKING_SHORTCODE_DROPDOWN_VISIBLE', 'block_editor_ranki
 if ( !function_exists( 'is_block_editor_ranking_shortcode_dropdown_visible' ) ):
 function is_block_editor_ranking_shortcode_dropdown_visible(){
   return get_theme_option(OP_BLOCK_EDITOR_RANKING_SHORTCODE_DROPDOWN_VISIBLE, 1);
+}
+endif;
+
+//ブロックエディタースタイルブロックオプション有効
+define('OP_BLOCK_EDITOR_STYLE_BLOCK_OPTION_VISIBLE', 'block_editor_style_block_option_visible');
+if ( !function_exists( 'is_block_editor_style_block_option_visible' ) ):
+function is_block_editor_style_block_option_visible(){
+  return get_theme_option(OP_BLOCK_EDITOR_STYLE_BLOCK_OPTION_VISIBLE);
 }
 endif;
 

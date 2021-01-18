@@ -7,6 +7,21 @@
  */
 if ( !defined( 'ABSPATH' ) ) exit;
 
+//フロントページタイプ
+update_theme_option(OP_FRONT_PAGE_TYPE);
+
+//タブインデックスカテゴリー
+update_theme_option(OP_INDEX_CATEGORY_IDS);
+
+//タブインデックスカテゴリー（カンマテキスト）
+update_theme_option(OP_INDEX_CATEGORY_IDS_COMMA_TEXT);
+
+//インデックス新着エントリーカード数
+update_theme_option(OP_INDEX_NEW_ENTRY_CARD_COUNT);
+
+//インデックスカテゴリーエントリーカード数
+update_theme_option(OP_INDEX_CATEGORY_ENTRY_CARD_COUNT);
+
 //インデックスの並び順
 update_theme_option(OP_INDEX_SORT_ORDERBY);
 
@@ -49,3 +64,6 @@ update_theme_option(OP_ENTRY_CARD_POST_AUTHOR_VISIBLE);
 
 //コメント数を表示
 update_theme_option(OP_ENTRY_CARD_POST_COMMENT_COUNT_VISIBLE);
+
+//インデックスリストに表示しないカテゴリーID
+update_theme_option(OP_ARCHIVE_EXCLUDE_CATEGORY_IDS);

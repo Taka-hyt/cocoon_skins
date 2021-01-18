@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Themes - Twenty Nineteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-01-24 01:00:41+0000\n"
+"PO-Revision-Date: 2021-01-16 05:40:35+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/2.4.0-alpha\n"
+"X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Themes - Twenty Nineteen\n"
 
@@ -16,21 +16,101 @@ msgid "Our 2019 default theme is designed to show off the power of the block edi
 msgstr "2019年のデフォルトテーマは、ブロックエディターの持つ力を引き立たせるよう設計されています。すべてのデフォルトブロック用カスタムスタイルを含み、エディターでの表示がサイト上の表示と同じになるように作られています。Twenty Nineteen は、写真ブログの運営、新規事業の立ち上げ、非営利団体の支援など、幅広い種類のサイトに適応できるようになっています。十分な空白と、現代的なサンセリフ体の見出し・クラシックなセリフ体の本文というセットで、あらゆる画面サイズで美しく表示できるように構築されました。"
 
 #. Theme Name of the theme
+#: inc/block-patterns.php:20
 msgid "Twenty Nineteen"
 msgstr "Twenty Nineteen"
+
+#: inc/block-patterns.php:164
+msgid "Doug Watson"
+msgstr "Doug Watson"
+
+#: inc/block-patterns.php:156
+msgid "Eva Young"
+msgstr "Eva Young"
+
+#: inc/block-patterns.php:145 inc/block-patterns.php:152
+msgid "Team"
+msgstr "チーム"
+
+#: inc/block-patterns.php:131
+msgid "Content Strategy"
+msgstr "コンテンツストラテジー"
+
+#: inc/block-patterns.php:126
+msgid "Copywriting"
+msgstr "コピーライティング"
+
+#: inc/block-patterns.php:121
+msgid "Marketing"
+msgstr "マーケティング"
+
+#: inc/block-patterns.php:114
+msgid "Social Media"
+msgstr "ソーシャルメディア"
+
+#: inc/block-patterns.php:109
+msgid "Mobile"
+msgstr "モバイル"
+
+#: inc/block-patterns.php:104
+msgid "Website Design"
+msgstr "サイトデザイン"
+
+#: inc/block-patterns.php:103 inc/block-patterns.php:108
+#: inc/block-patterns.php:113 inc/block-patterns.php:120
+#: inc/block-patterns.php:125 inc/block-patterns.php:130
+#: inc/block-patterns.php:155 inc/block-patterns.php:163
+msgid "Gradient"
+msgstr "グラデーション"
+
+#: inc/block-patterns.php:92 inc/block-patterns.php:98
+msgid "Services"
+msgstr "サービス"
+
+#: inc/block-patterns.php:80
+msgid "Contact Us"
+msgstr "お問い合わせ"
+
+#: inc/block-patterns.php:74
+msgid "example@example.com"
+msgstr "example@example.com"
+
+#: inc/block-patterns.php:74
+msgid "(555) 555-5555"
+msgstr "(555) 555-5555"
+
+#: inc/block-patterns.php:58 inc/block-patterns.php:64
+msgid "Get In Touch"
+msgstr "お問い合わせ"
+
+#: inc/block-patterns.php:46
+msgid "Learn More"
+msgstr "さらに詳しく"
+
+#: classes/class-twentynineteen-walker-comment.php:98
+msgid "Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved."
+msgstr "あなたのコメントは管理者の承認待ちです。これはプレビューで、コメントは承認後に表示されます。"
+
+#: functions.php:154
+msgid "Dark Blue"
+msgstr "ダークブルー"
+
+#: functions.php:149
+msgid "Blue"
+msgstr "青"
 
 #. translators: %s: Parent post link.
 #: single.php:31
 msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%s</span>"
-msgstr "<span class=\"post-title\">%s</span> <span class=\"meta-nav\">内で公開</span>"
+msgstr "<span class=\"meta-nav\">公開: </span><span class=\"post-title\">%s</span>"
 
 #: image.php:87
 msgctxt "Parent post link"
 msgid "<span class=\"meta-nav\">Published in</span><br><span class=\"post-title\">%title</span>"
 msgstr "<span class=\"meta-nav\">投稿:</span><br><span class=\"post-title\">%title</span>"
 
-#: template-parts/content/content-excerpt.php:18
 #: template-parts/content/content.php:18
+#: template-parts/content/content-excerpt.php:18
 msgctxt "post"
 msgid "Featured"
 msgstr "おすすめ"
@@ -66,51 +146,51 @@ msgctxt "primary color"
 msgid "Default"
 msgstr "デフォルト"
 
-#: functions.php:168
+#: functions.php:169
 msgid "White"
 msgstr "白"
 
-#: functions.php:163
+#: functions.php:164
 msgid "Light Gray"
 msgstr "ライトグレー"
 
-#: functions.php:158
+#: functions.php:159
 msgid "Dark Gray"
 msgstr "ダークグレー"
 
-#: functions.php:136
+#: functions.php:137
 msgid "XL"
 msgstr "XL"
 
-#: functions.php:135
+#: functions.php:136
 msgid "Huge"
 msgstr "特大"
 
-#: functions.php:130
+#: functions.php:131
 msgid "L"
 msgstr "L"
 
-#: functions.php:129
+#: functions.php:130
 msgid "Large"
 msgstr "大"
 
-#: functions.php:124
+#: functions.php:125
 msgid "M"
 msgstr "M"
 
-#: functions.php:123
+#: functions.php:124
 msgid "Normal"
 msgstr "通常"
 
-#: functions.php:117
-msgid "Small"
-msgstr "小"
-
-#: functions.php:118
+#: functions.php:119
 msgid "S"
 msgstr "S"
 
-#: footer.php:37 functions.php:60
+#: functions.php:118
+msgid "Small"
+msgstr "小"
+
+#: functions.php:60 footer.php:37
 msgid "Footer Menu"
 msgstr "フッターメニュー"
 
@@ -121,13 +201,13 @@ msgstr "フルサイズ"
 
 #: image.php:56
 msgid "Page"
-msgstr "ページ"
+msgstr "固定ページ"
 
-#: functions.php:192
+#: functions.php:196
 msgid "Add widgets here to appear in your footer."
-msgstr "フッターに表示するウィジェットを追加します。"
+msgstr "フッターに表示させるにはここにウィジェットを追加してください。"
 
-#: template-parts/footer/footer-widgets.php:12 functions.php:190
+#: functions.php:194 template-parts/footer/footer-widgets.php:12
 msgid "Footer"
 msgstr "フッター"
 
@@ -137,7 +217,7 @@ msgstr "メインカラー"
 
 #: template-parts/post/discussion-meta.php:18
 msgid "No comments"
-msgstr "コメントなし"
+msgstr "コメントはありません"
 
 #. translators: %d: Number of comments.
 #: template-parts/post/discussion-meta.php:16
@@ -159,20 +239,20 @@ msgid "Top Menu"
 msgstr "トップメニュー"
 
 #. translators: %s: Post title. Only visible to screen readers.
-#: template-parts/content/content-single.php:27
 #: template-parts/content/content.php:36
+#: template-parts/content/content-single.php:27
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr "<span class=\"screen-reader-text\">\"%s\" の</span>続きを読む"
 
+#: image.php:52 template-parts/content/content.php:49
 #: template-parts/content/content-single.php:40
-#: template-parts/content/content.php:49
-#: template-parts/content/content-page.php:27 image.php:52
+#: template-parts/content/content-page.php:27
 msgid "Pages:"
-msgstr "ページ:"
+msgstr "固定ページ:"
 
 #: template-parts/content/content-none.php:46
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
-msgstr "お探しのものが見つからないようです。検索すると良いかもしれません。"
+msgstr "お探しのコンテンツを見つけられませんでした。検索をお試しください。"
 
 #: template-parts/content/content-none.php:39
 msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
@@ -189,11 +269,11 @@ msgstr "何も見つかりませんでした"
 
 #: single.php:42
 msgid "Previous post:"
-msgstr "過去の投稿:"
+msgstr "前の投稿:"
 
 #: single.php:41
 msgid "Previous Post"
-msgstr "過去の投稿"
+msgstr "前の投稿"
 
 #: single.php:39
 msgid "Next post:"
@@ -203,13 +283,17 @@ msgstr "次の投稿:"
 msgid "Next Post"
 msgstr "次の投稿"
 
+#: search.php:22
+msgid "Search results for: "
+msgstr "検索結果:"
+
 #: inc/template-tags.php:234
 msgid "Older posts"
 msgstr "過去の投稿"
 
 #: inc/template-tags.php:230
 msgid "Newer posts"
-msgstr "次の投稿"
+msgstr "新しい投稿"
 
 #: inc/template-tags.php:104
 msgid "Tags:"
@@ -222,12 +306,12 @@ msgstr "カテゴリー:"
 #. translators: Used between list items, there is a space after the comma.
 #: inc/template-tags.php:86 inc/template-tags.php:98
 msgid ", "
-msgstr ", "
+msgstr "、"
 
 #. translators: %s: Post title. Only visible to screen readers.
 #: inc/template-tags.php:63
 msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
-msgstr "<span class=\"screen-reader-text\">%sに</span>コメント"
+msgstr "コメントをどうぞ<span class=\"screen-reader-text\"> (%s)</span>"
 
 #: inc/template-tags.php:46
 msgid "Posted by"
@@ -250,39 +334,39 @@ msgstr "アーカイブ:"
 #. translators: %s: Taxonomy singular name.
 #: inc/template-functions.php:90
 msgid "%s Archives:"
-msgstr "%sアーカイブ: "
+msgstr "%sのアーカイブ:"
 
 #: inc/template-functions.php:86
 msgid "Post Type Archives: "
-msgstr "投稿タイプアーカイブ:"
+msgstr "投稿タイプアーカイブ: "
 
 #: inc/template-functions.php:84
 msgid "Daily Archives: "
-msgstr "日別アーカイブ:"
+msgstr "日別アーカイブ: "
 
 #: inc/template-functions.php:82
 msgid "Monthly Archives: "
-msgstr "月別アーカイブ:"
+msgstr "月別アーカイブ: "
 
 #: inc/template-functions.php:80
 msgid "Yearly Archives: "
-msgstr "年別アーカイブ:"
+msgstr "年別アーカイブ: "
 
 #: inc/template-functions.php:78
 msgid "Author Archives: "
-msgstr "投稿者アーカイブ:"
+msgstr "投稿者アーカイブ: "
 
 #: inc/template-functions.php:76
 msgid "Tag Archives: "
-msgstr "タグアーカイブ:"
+msgstr "タグアーカイブ: "
 
 #: inc/template-functions.php:74
 msgid "Category Archives: "
-msgstr "カテゴリーアーカイブ:"
+msgstr "カテゴリーアーカイブ: "
 
 #. translators: %s: Post title. Only visible to screen readers.
+#: inc/template-tags.php:120 template-parts/content/content-page.php:41
 #: template-parts/header/entry-header.php:32
-#: template-parts/content/content-page.php:41 inc/template-tags.php:120
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr "編集 <span class=\"screen-reader-text\">%s</span>"
 
@@ -290,7 +374,7 @@ msgstr "編集 <span class=\"screen-reader-text\">%s</span>"
 msgid "Skip to content"
 msgstr "コンテンツへスキップ"
 
-#: template-parts/header/site-branding.php:46 functions.php:61
+#: functions.php:61 template-parts/header/site-branding.php:46
 msgid "Social Links Menu"
 msgstr "﻿ソーシャルリンクメニュー"
 
@@ -334,22 +418,22 @@ msgstr "「%s」への1件の返信"
 
 #: comments.php:35 comments.php:105 comments.php:107
 msgid "Leave a comment"
-msgstr "コメントを残す"
+msgstr "コメントをどうぞ"
 
 #: comments.php:33
 msgid "Join the Conversation"
 msgstr "ディスカッションに参加"
 
-#: classes/class-twentynineteen-walker-comment.php:94
+#: classes/class-twentynineteen-walker-comment.php:96
 msgid "Your comment is awaiting moderation."
-msgstr "コメントは承認待ちです。"
+msgstr "あなたのコメントは承認待ちです。"
 
-#: classes/class-twentynineteen-walker-comment.php:87
+#: classes/class-twentynineteen-walker-comment.php:89
 msgid "Edit"
 msgstr "編集"
 
 #. translators: 1: Comment date, 2: Comment time.
-#: classes/class-twentynineteen-walker-comment.php:79
+#: classes/class-twentynineteen-walker-comment.php:78
 msgid "%1$s at %2$s"
 msgstr "%1$s %2$s"
 

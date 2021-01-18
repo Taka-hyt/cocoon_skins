@@ -14,7 +14,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     <?php
     echo get_the_post_thumbnail($post->ID, get_related_entry_card_thumbnail_size(), array('class' => 'related-entry-card-thumb-image card-thumb-image', 'alt' => '') ); //サムネイルを呼び出す?>
     <?php else: // サムネイルを持っていないとき ?>
-    <img src="<?php echo get_no_image_160x90_url(); ?>" alt="" class="no-image related-entry-card-no-image" width="<?php echo THUMB160WIDTH; ?>" height="<?php echo THUMB160HEIGHT; ?>" />
+      <?php //NO IMAGEサムネイルの出力
+      echo get_original_image_tag(get_no_image_160x90_url(), THUMB160WIDTH, THUMB160HEIGHT, '"no-image related-entry-card-no-image', ''); ?>
+
     <?php endif; ?>
     <?php the_nolink_category(null, apply_filters('is_related_entry_card_category_label_visible', true)); //カテゴリラベルの取得 ?>
   </figure><!-- /.related-entry-thumb -->
@@ -29,6 +31,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
       <?php echo get_the_snippet( get_the_content(''), get_related_excerpt_max_length() ); //カスタマイズで指定した文字の長さだけ本文抜粋?>
     </div>
     <?php endif ?>
+    <?php //表示するものがあるか判定
+    if (is_related_entry_card_post_date_visible() || is_related_entry_card_post_update_visible() || is_related_entry_card_post_author_visible()): ?>
     <div class="related-entry-card-meta card-meta e-card-meta">
       <div class="related-entry-card-info e-card-info">
         <?php
@@ -53,7 +57,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <?php endif ?>
       </div>
     </div>
-
+    <?php endif ?>
   </div><!-- /.related-entry-card-content -->
 
 
