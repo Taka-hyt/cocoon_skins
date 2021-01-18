@@ -1,0 +1,299 @@
+/*
+  Skin Name: Simple Navy
+  Description: 紺をベースにしたシンプルで使いやすいスキン
+  Skin URI: https://karasu-hc.com/2020/05/20/cocoon-2/
+  Author: ベーやん
+  Author URI: https://karasu-hc.com/2020/05/20/cocoon-2/
+  Screenshot URI: https://karasu-hc.com/wp-content/uploads/2020/05/simple_navy.jpg
+  Version: 1.0.0
+  Priority: 9999000000
+*/
+/*以下にスタイルシートを記入してください*/
+
+$bg-color: #f4f5f7;
+$white: #fff;
+$black: #333;
+$key-color: #005488;
+$key-sub-color: #6b89af;
+$key-light-color: #dae0eb;
+
+/* 全体 */
+body {
+    font-family: Avenir, 'Helvetica neue', Helvetica, 'Segoe UI', '游ゴシック体', YuGothic, '游ゴシック Medium', 'Yu Gothic Medium',
+        'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background-color: $bg-color;
+}
+.main,
+.sidebar {
+    background-color: $bg-color;
+}
+
+/* ヘッダー・グローバルナビ */
+.header-container .navi {
+    background-color: $key-color;
+}
+#navi .navi-in a {
+    color: $white;
+}
+#navi .navi-in > .menu-header .sub-menu {
+    background-color: $key-color;
+}
+#navi .navi-in a:hover {
+    background-color: $key-sub-color;
+}
+.menu-header .item-label {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+.header-container {
+    color: $white;
+    background-color: $key-color;
+}
+.header {
+    background-color: $key-color;
+}
+.header .header-in {
+    min-height: 100px;
+}
+
+/* サイト名・キャッチフレーズ */
+.site-name-text {
+    color: $white;
+}
+.site-name-text:hover {
+    color: $white;
+}
+
+/* 見出し */
+.article h2 {
+    margin: 5px 0;
+    padding: 15px 25px;
+    background-color: $key-color;
+    color: $white;
+    font-size: 22px;
+    border-radius: 1px;
+}
+.article h3 {
+    padding: 10px 20px;
+    background-color: $key-light-color;
+    border-color: $key-color;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: 6px solid $key-color;
+}
+.article h4 {
+    border-top: 2px solid $key-color;
+    border-bottom: 2px solid $key-color;
+}
+.article h5 {
+    border-bottom: none;
+    position: relative;
+}
+.article h5:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: -webkit-linear-gradient(to right, $key-color, $key-light-color);
+    background: linear-gradient(to right, $key-color, $key-light-color);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+/* サイドバー */
+.sidebar h3 {
+    padding: 10px;
+    border: 1.5px solid $black;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    border-radius: 1px;
+}
+.widget_recent_entries ul li a:hover,
+.widget_categories ul li a:hover,
+.widget_archive ul li a:hover,
+.widget_pages ul li a:hover,
+.widget_meta ul li a:hover,
+.widget_rss ul li a:hover,
+.widget_nav_menu ul li a:hover {
+    background-color: $white;
+}
+
+/* 検索ボタン */
+input[type='text'].search-edit {
+    font-size: 16px;
+    border-radius: 46px;
+}
+
+/* シェアボタン */
+#container .sns-buttons a {
+    border-radius: 1px;
+}
+
+/* ブログカード */
+.a-wrap .blogcard {
+    border-color: $key-color;
+}
+.a-wrap:hover {
+    background-color: $white;
+    -webkit-transform: translateY(-2px);
+    -ms-transform: translateY(-2px);
+    transform: translateY(-2px);
+    box-shadow: 0 0 8px #f6fafd;
+}
+// .ecb-entry-border .entry-card-wrap,
+// .recb-entry-border .related-entry-card-wrap,
+// .tagcloud a,
+// .author-box,
+// .comment-reply-link,
+// .ranking-item {
+//     border-color: $key-sub-color;
+// }
+.cat-label {
+    top: 0;
+    left: 0;
+    background-color: $key-color;
+    border-top: none;
+    border-left: none;
+}
+.cat-link {
+    background-color: $key-color;
+    border-radius: 1px;
+}
+.tag-link,
+.comment-reply-link {
+    color: $key-color;
+    border-color: $key-sub-color;
+    border-radius: 1px;
+}
+.tag-link:hover,
+.comment-reply-link:hover {
+    color: #007eaf;
+    background-color: transparent;
+}
+.tagcloud a {
+    /* color: $key-color; */
+    // border-color: $key-color;
+    border-radius: 29px;
+}
+/* .tagcloud a:hover {
+    color: #007eaf;
+} */
+
+/* コメント送信ボタン */
+input[type='submit'] {
+    padding: 10px;
+    background: $key-color;
+    color: $white;
+    font-size: 14px;
+    border: none;
+    border-radius: 1px;
+}
+.pagination-next-link,
+.comment-btn {
+    padding: 10px;
+    background: transparent;
+    color: $key-color;
+    font-size: 14px;
+    border: 1px solid $key-color;
+    border-radius: 1px;
+}
+
+/* テーブル */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    font-size: 16px;
+}
+table th {
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1.5px solid $key-color;
+    background: $key-light-color;
+    font-size: 18px;
+}
+table tr:nth-child(even) {
+    background: $key-light-color;
+}
+
+/* ページネーション */
+.page-numbers {
+    color: $key-sub-color;
+    border: 1px solid $key-color;
+    border-radius: 50%;
+}
+.pagination .current {
+    background-color: $key-color;
+    color: $white;
+}
+.page-numbers.dots {
+    opacity: 1;
+    background: none;
+}
+.pagination a:hover {
+    background-color: $key-color;
+    color: $white;
+}
+/* フッター */
+.footer {
+    padding-top: 30px;
+    padding-bottom: 35px;
+    color: $white;
+    background-color: $key-color;
+}
+.footer-bottom {
+    margin-top: 0;
+}
+.footer-in h3 {
+    padding: 10px;
+    border: 1.5px solid $black;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 1px;
+}
+
+/* スクロールトップボタン */
+.go-to-top {
+    bottom: 35px;
+}
+
+.go-to-top-button {
+    width: 45px;
+    height: 45px;
+    color: $white;
+    background-color: $black;
+    border-radius: 50%;
+}
+.go-to-top-button:hover {
+    color: $white;
+}
+
+/* レスポンシブ */
+@media screen and (max-width: 834px) {
+    .header-container-in.hlt-top-menu #header .header-in {
+        display: flex;
+        align-items: center;
+    }
+    .header .header-in {
+        min-height: 80px;
+    }
+    .sidebar h3 {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .article h2 {
+        padding: 0.6em 0.2em;
+    }
+    .article h3 {
+        padding: 0.4em 1em;
+    }
+    .footer {
+        padding-top: 25px;
+        padding-bottom: 30px;
+    }
+}

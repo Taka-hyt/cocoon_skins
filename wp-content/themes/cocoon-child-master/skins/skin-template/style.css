@@ -1,0 +1,29 @@
+/*
+  Skin Name: スキンのテンプレート
+  Description: 青をベースにしたスキン
+  Skin URI: https://karasu-hc.com/
+  Author: わいひら
+  Author URI: https://karasu-hc.com/
+  Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-template.png
+  Version: 1.0.0
+  Priority: 9999000000
+*/
+/*以下にスタイルシートを記入してください*/
+
+.sidebar h3 {
+}
+
+.sidebar h3 {
+}
+
+.sidebar h3 {
+}
+.sidebar h3 {
+}
+
+.sidebar h3 {
+}
+
+.navi-in > ul .sub-menu a {
+    background-color: $key-color;
+}
