@@ -4,7 +4,7 @@
   Skin Name: パステルブルー
   Description: 青をベースにしたシンプルで使いやすいスキン
   Skin URI: https://karasu-hc.com/2020/05/20/cocoon-2/
-  Author: Taka
+  Author: ベーやん
   Author URI: https://karasu-hc.com/2020/05/20/cocoon-2/
   Screenshot URI: https://karasu-hc.com/wp-content/uploads/2020/05/simple_blue.jpg
   Version: 1.0.0
@@ -21,7 +21,7 @@ body {
 
 .main,
 .sidebar {
-  background-color: #f4f5f7;
+  background-color: #fff;
 }
 
 /* ヘッダー・グローバルナビ */
@@ -39,7 +39,7 @@ body {
 }
 
 #navi .navi-in a:hover {
-  background-color: #e2f3f3;
+  background-color: #aadddd;
 }
 
 .menu-header .item-label {
@@ -132,7 +132,7 @@ body {
 .widget_meta ul li a:hover,
 .widget_rss ul li a:hover,
 .widget_nav_menu ul li a:hover {
-  background-color: #fff;
+  background-color: #eff9f9;
 }
 
 .widget_recent_entries ul li a,
@@ -143,6 +143,27 @@ body {
 .widget_rss ul li a,
 .widget_nav_menu ul li a {
   padding: 0.5em 0.5em;
+}
+
+/* サイドバーカテゴリ */
+
+.cat-item a::before {
+  font-family: FontAwesome;
+  content: '\f0da';
+  margin-right: 6px;
+}
+
+.cat-item .children a::before {
+  content: '\f105';
+}
+
+.font-awesome-5 .cat-item a::before {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+.font-awesome-5 .cat-item .children a::before {
+  content: '\f105';
 }
 
 /* プロフィールボックス */
@@ -193,7 +214,7 @@ select {
 }
 
 .a-wrap:hover {
-  background-color: #fff;
+  background-color: #eff9f9;
   transform: translateY(-2px);
   box-shadow: 0 0 8px #f6fafd;
 }
@@ -201,6 +222,8 @@ select {
 .blogcard-label {
   background-color: #86cfcf;
 }
+
+/* カテゴリラベル */
 
 .cat-label {
   top: 0;
@@ -213,20 +236,40 @@ select {
 .cat-link {
   background-color: #deabc4;
   border-radius: 0.5em;
+  transition: all 0.3s;
 }
 
-.tag-link,
-.comment-reply-link {
+.cat-link:hover {
+  opacity: 0.8;
+}
+
+/* タグリンク */
+
+.tag-link {
   color: #deabc4;
   border-color: #deabc4;
   border-radius: 0.5em;
 }
 
-.tag-link:hover,
+.tag-link:hover {
+  color: #deabc4;
+  background-color: rgba(222, 171, 196, 0.1);
+}
+
+/* コメント箇所 */
+
+.comment-reply-link {
+  color: #86cfcf;
+  border-color: #86cfcf;
+  border-radius: 0.5em;
+}
+
 .comment-reply-link:hover {
   color: #44abab;
-  background-color: transparent;
+  background-color: #eff9f9;
 }
+
+/* タグ */
 
 .tagcloud a {
   color: #86cfcf;
@@ -236,6 +279,11 @@ select {
 
 .tagcloud a:hover {
   color: #44abab;
+  background-color: #eff9f9;
+}
+
+.fa-tag:before {
+  content: '\f02c';
 }
 
 /* コメント送信ボタン */
@@ -257,6 +305,12 @@ input[type='submit'] {
   font-size: 14px;
   border: 1px solid #86cfcf;
   border-radius: 0.5em;
+}
+
+.pagination-next-link:hover,
+.comment-btn:hover {
+  color: #44abab;
+  background-color: #eff9f9;
 }
 
 /* テーブル */
@@ -318,7 +372,8 @@ table tr:nth-child(even) {
 
 blockquote {
   border-color: #86cfcf;
-  background-color: #f4f5f7;
+  background-color: #eff9f9;
+  border-radius: 0.5em;
 }
 
 blockquote::before,
@@ -347,6 +402,15 @@ blockquote::after {
   border-radius: 0.5em;
 }
 
+.navi-footer-in a {
+  color: #fff;
+}
+
+.navi-footer-in a:hover {
+  color: #fff;
+  background-color: #aadddd;
+}
+
 /* スクロールトップボタン */
 
 .go-to-top {
@@ -357,12 +421,14 @@ blockquote::after {
   width: 45px;
   height: 45px;
   color: #fff;
-  background-color: #333;
+  background-color: #44abab;
   border-radius: 50%;
+  transition: all 0.3s;
 }
 
 .go-to-top-button:hover {
   color: #fff;
+  background-color: #aadddd;
 }
 
 /* レスポンシブ */
